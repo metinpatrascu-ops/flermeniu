@@ -60,7 +60,7 @@
             filter: brightness(1.1) saturate(0.75) blur(1px);
             border: none;
             outline: none;
-            /* Elimină fundalul negru al pozei */
+            /* Magia pentru a scoate fundalul negru */
             mix-blend-mode: screen;
         }
 
@@ -106,7 +106,7 @@
             display: block;
             border: none;
             outline: none;
-            /* Elimină fundalul negru al pozei */
+            /* Magia pentru a scoate fundalul negru */
             mix-blend-mode: screen;
         }
 
@@ -301,7 +301,7 @@
         </div>
     </section>
 
-    <!-- CAFEA & SPECIALITATI -->
+    <!-- DAILY RITUAL -->
     <section class="menu-section">
         <div class="content-wrapper">
             <h2><span class="section-icon">☕</span> DAILY RITUAL</h2>
@@ -393,10 +393,17 @@
                         </tr>
                         <tr>
                             <td>
+                                <span class="item-name">Iced Latte</span><span class="ml">250ml</span>
+                                <span class="ingredients">Double shot + gheață + lapte</span>
+                            </td>
+                            <td class="price">22 RON</td>
+                        </tr>
+                        <tr>
+                            <td>
                                 <span class="item-name">Babycino</span><span class="ml">150ml</span>
                                 <span class="ingredients">Spumă de lapte caldă, pudră de cacao</span>
                             </td>
-                            <td class="price">15 RON</td>
+                            <td class="price">13 RON</td>
                         </tr>
                         <tr>
                             <td>
@@ -431,28 +438,28 @@
                                 <span class="item-name">Matcha Latte</span><span class="ml">250ml</span>
                                 <span class="ingredients">Pudră de matcha ceremonial, lapte</span>
                             </td>
-                            <td class="price">24 RON</td>
+                            <td class="price">26 RON</td>
                         </tr>
                         <tr>
                             <td>
                                 <span class="item-name">Iced Matcha</span><span class="ml">250ml</span>
                                 <span class="ingredients">Matcha, lapte, gheață</span>
                             </td>
-                            <td class="price">25 RON</td>
+                            <td class="price">26 RON</td>
                         </tr>
                         <tr>
                             <td>
                                 <span class="item-name">Pink Bubbles Matcha</span><span class="ml">250ml</span>
                                 <span class="ingredients">Matcha, apă tonică premium, sirop de trandafir</span>
                             </td>
-                            <td class="price">28 RON</td>
+                            <td class="price">32 RON</td>
                         </tr>
                         <tr>
                             <td>
                                 <span class="item-name">Cold Brew Tonic</span><span class="ml">250ml</span>
                                 <span class="ingredients">Cold brew coffee, apă tonică premium, gheață</span>
                             </td>
-                            <td class="price">23 RON</td>
+                            <td class="price">28 RON</td>
                         </tr>
                         <tr>
                             <td>
@@ -470,7 +477,7 @@
                                 <span class="item-name">Classic Affogato</span><span class="ml">150g</span>
                                 <span class="ingredients">1 cupă gelato de vanilie, 30ml espresso fierbinte</span>
                             </td>
-                            <td class="price">28 RON</td>
+                            <td class="price">32 RON</td>
                         </tr>
                         <tr>
                             <td>
@@ -770,21 +777,21 @@
                                 <span class="item-name">Pink Yang</span><span class="ml">330ml</span>
                                 <span class="ingredients">Căpșune, banană, zmeură, suc de mere</span>
                             </td>
-                            <td class="price">25 RON</td>
+                            <td class="price">30 RON</td>
                         </tr>
                         <tr>
                             <td>
                                 <span class="item-name">Red Power</span><span class="ml">330ml</span>
                                 <span class="ingredients">Căpșuni, coacăze negre, rodie, banană, suc de mere</span>
                             </td>
-                            <td class="price">25 RON</td>
+                            <td class="price">30 RON</td>
                         </tr>
                         <tr>
                             <td>
                                 <span class="item-name">Blue Glow</span><span class="ml">330ml</span>
                                 <span class="ingredients">Ananas, banane, piersică, spirulină, lapte de cocos</span>
                             </td>
-                            <td class="price">25 RON</td>
+                            <td class="price">30 RON</td>
                         </tr>
                     </table>
                 </div>
@@ -1023,7 +1030,6 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            // Animații la scroll
             const sections = document.querySelectorAll('.menu-section');
             const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
 
@@ -1038,7 +1044,6 @@
 
             sections.forEach(section => observer.observe(section));
 
-            // MAGIE PENTRU FUNDAL
             const imagesToTry = ['pozapentrusite.jpg', 'pozapentrusite.jpeg', 'pozapentrusite.png', 'fundal.jpg'];
             let imgIndex = 0;
             const body = document.body;
