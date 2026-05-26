@@ -276,7 +276,7 @@
             padding: 11px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.4s ease, color 0.4s ease;
-            flex-shrink: 0; /* Oprește micșorarea distorsionată pe mobil */
+            flex-shrink: 0;
         }
 
         h2:hover .title-svg-container {
@@ -445,13 +445,13 @@
                 font-size: 18px; 
                 gap: 12px; 
                 align-items: center;
-                display: flex !important; /* Forțează pictograma și textul pe același rând */
+                display: flex !important;
             }
             .title-svg-container { 
                 width: 38px !important; 
                 height: 38px !important; 
                 padding: 7px !important; 
-                display: inline-flex !important; /* Asigură că pictograma este vizibilă clar */
+                display: inline-flex !important;
             }
             .category-svg-container { 
                 width: 32px; 
@@ -933,7 +933,6 @@
             <div class="content-wrapper">
                 <h2>
                     <span class="title-svg-container">
-                        <!-- Elegant Croissant Icon -->
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M3 14c2-4 5-6 9-6s7 2 9 6" />
                             <path d="M6 13c1.5-2.5 3.5-3.5 6-3.5s4.5 1 6 3.5" />
@@ -948,7 +947,6 @@
                     <div>
                         <div class="category-label">
                             <span class="category-svg-container">
-                                <!-- Croissant Icon -->
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M3 14c2-4 5-6 9-6s7 2 9 6" />
                                     <path d="M6 13c1.5-2.5 3.5-3.5 6-3.5s4.5 1 6 3.5" />
@@ -998,7 +996,6 @@
                     <div>
                         <div class="category-label">
                             <span class="category-svg-container">
-                                <!-- Dessert Cake slice Icon -->
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M12 21a9 9 0 0 0 9-9H3a9 9 0 0 0 9 9Z" />
                                     <circle cx="12" cy="12" r="1.5" />
@@ -1037,7 +1034,7 @@
         </section>
     </div>
 
-    <!-- LAYER 2: BĂUTURI (DRINKS TAB) - ASCUNS INIȚIAL -->
+    <!-- LAYER 2: BĂUTURI (DRINKS TAB) -->
     <div id="drinks-tab" class="tab-content">
         <section class="menu-section">
             <div class="content-wrapper">
@@ -1670,7 +1667,6 @@
             <div class="content-wrapper">
                 <h2>
                     <span class="title-svg-container">
-                        <!-- Custom premium shot glass icon -->
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M6 3h12v11a6 6 0 0 1-6 6 6 6 0 0 1-6-6V3Z" />
                             <line x1="6" y1="8" x2="18" y2="8" stroke-dasharray="2 2" />
