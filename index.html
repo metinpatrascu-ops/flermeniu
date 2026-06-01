@@ -479,6 +479,81 @@
              vertical-align: middle;
         }
 
+        /* POPUP EVENIMENT PRIVAT */
+        .popup-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(10, 5, 2, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        .popup-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .popup-content {
+            background: var(--brand-brown);
+            border: 1.5px solid var(--gold);
+            padding: 40px 30px;
+            border-radius: 12px;
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            transform: translateY(30px);
+            transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+        }
+        .popup-overlay.show .popup-content {
+            transform: translateY(0);
+        }
+        .popup-title {
+            font-family: var(--font-accent);
+            color: var(--gold);
+            font-size: 26px;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+        .popup-message {
+            color: var(--text-dim);
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            font-family: var(--font-main);
+        }
+        .popup-message strong {
+            color: var(--text-main);
+        }
+        .popup-close {
+            position: absolute;
+            top: 15px; right: 15px;
+            background: none; border: none;
+            color: var(--gold); font-size: 28px;
+            cursor: pointer; opacity: 0.6; transition: opacity 0.3s;
+            line-height: 1;
+        }
+        .popup-close:hover { opacity: 1; }
+        .popup-btn {
+            background: var(--gold);
+            color: var(--brand-brown-dark);
+            border: none; padding: 12px 28px;
+            font-family: var(--font-main); font-weight: 800;
+            text-transform: uppercase; letter-spacing: 2px;
+            border-radius: 6px; cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .popup-btn:hover { 
+            background: #fff; 
+            box-shadow: 0 4px 15px rgba(179, 93, 45, 0.4);
+        }
+
         @media (max-width: 1024px) { 
              .menu-grid { grid-template-columns: 1fr; gap: 40px 60px; } 
              .content-wrapper { padding: 40px 5% 60px; }
@@ -517,6 +592,27 @@
     </style>
 </head>
 <body>
+
+    <!-- POPUP EVENIMENT PRIVAT -->
+    <div id="event-popup" class="popup-overlay">
+        <div class="popup-content">
+            <button class="popup-close" onclick="closeEventPopup()">&times;</button>
+            <div style="margin-bottom: 20px;">
+                <!-- O stea minimalistă / element Mercedes-like -->
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" style="width: 48px; height: 48px; margin: 0 auto;">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M12 2v10l-8.5 5"></path>
+                    <path d="M12 12l8.5 5"></path>
+                </svg>
+            </div>
+            <h3 class="popup-title">Eveniment Privat</h3>
+            <p class="popup-message">
+                Ne cerem scuze, dar <strong>marți</strong> locația noastră va găzdui un eveniment privat <em>Mercedes-Benz</em> și vom fi, din păcate, închiși pentru publicul larg.<br><br>
+                Vă așteptăm cu drag începând de <strong>miercuri</strong>, la program normal, cu cafeluța voastră preferată! ☕✨
+            </p>
+            <button class="popup-btn" onclick="closeEventPopup()">Am înțeles</button>
+        </div>
+    </div>
 
     <div class="bg-watermark">
         <img src="logofler.png" alt="" class="bg-watermark-logo" onerror="this.style.display='none';">
@@ -629,7 +725,6 @@
             </div>
         </section>
 
-        <!-- LAYERS SECTION REORGANIZAT -->
         <section class="menu-section is-visible">
             <div class="content-wrapper">
                 <h2>
@@ -1089,7 +1184,6 @@
 
                     <div>
                         <div class="category-label" style="opacity: 0; pointer-events: none;">
-                            <!-- Spațiator invizibil pentru a alinia înghețata frumos cu titlul DESSERTS -->
                             <span class="category-svg-container">
                                 <svg viewBox="0 0 24 24"></svg>
                             </span>
@@ -2126,6 +2220,7 @@
         </section>
     </div>
 
+    <!-- LEGAL COMPLIANCE & ALLERGENS MAP DISCRET -->
     <footer style="text-align: center; padding: 60px 20px 100px; border-top: 1px solid var(--border); margin-top: 60px; position: relative; z-index: 10;">
         <p style="color: var(--text-dim); font-size: 13px; font-family: var(--font-main); letter-spacing: 1px; margin-bottom: 20px;">
             * Preparatele noastre pot conține alergeni. Cifrele din paranteze sau parantezele drepte indică grupa de alergeni de mai jos.
@@ -2168,72 +2263,6 @@
         document.addEventListener("DOMContentLoaded", () => {
             const sections = document.querySelectorAll('.menu-section');
             const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
-            
-            // Crearea container-ului pentru tooltip-ul poveștii
-            const tooltip = document.createElement('div');
-            tooltip.className = 'story-tooltip';
-            document.body.appendChild(tooltip);
-            
-            let activeTooltipIcon = null;
-
-            // Logică pentru Povești la Click
-            const icons = document.querySelectorAll('.title-svg-container');
-            
-            icons.forEach(icon => {
-                icon.addEventListener('click', function(e) {
-                    e.stopPropagation(); // Oprim ca document click sa inchida imediat tooltipul
-                    
-                    const storyTitle = this.getAttribute('data-story');
-                    const storyText = this.getAttribute('data-text');
-                    
-                    if(activeTooltipIcon === this && tooltip.classList.contains('show')) {
-                        // Daca dam click pe acelasi icon, ascundem povestea
-                        tooltip.classList.remove('show');
-                        activeTooltipIcon = null;
-                        return;
-                    }
-
-                    // Setam continutul
-                    tooltip.innerHTML = `<strong>${storyTitle}</strong>${storyText}`;
-                    
-                    // Calculam pozitia
-                    const rect = this.getBoundingClientRect();
-                    const tooltipRect = tooltip.getBoundingClientRect();
-                    
-                    // Tooltip pozitionat exact deasupra iconitei, centrat
-                    const topPos = rect.top + window.scrollY - tooltipRect.height - 15;
-                    const leftPos = rect.left + window.scrollX + (rect.width / 2) - (tooltipRect.width / 2);
-
-                    tooltip.style.top = `${topPos}px`;
-                    tooltip.style.left = `${leftPos}px`;
-                    
-                    // Daca iasa din ecran la stanga/dreapta, il ajustam usor
-                    if(leftPos < 10) {
-                        tooltip.style.left = '10px';
-                    } else if(leftPos + tooltipRect.width > window.innerWidth - 10) {
-                        tooltip.style.left = `${window.innerWidth - tooltipRect.width - 10}px`;
-                    }
-                    
-                    // Afisam tooltip-ul
-                    tooltip.classList.add('show');
-                    activeTooltipIcon = this;
-                });
-            });
-
-            // Ascundem povestea cand dam scroll sau click altundeva
-            window.addEventListener('scroll', () => {
-                if (tooltip.classList.contains('show')) {
-                    tooltip.classList.remove('show');
-                    activeTooltipIcon = null;
-                }
-            }, { passive: true });
-            
-            document.addEventListener('click', () => {
-                if (tooltip.classList.contains('show')) {
-                    tooltip.classList.remove('show');
-                    activeTooltipIcon = null;
-                }
-            });
 
             const observer = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
@@ -2317,6 +2346,21 @@
                 img.src = imagesToTry[imgIndex];
             }
             tryNextImage();
+
+            /* POPUP LOGIC */
+            const eventPopup = document.getElementById('event-popup');
+            if(eventPopup) {
+                // Apare după 0.8 secunde de la încărcarea paginii
+                setTimeout(() => {
+                    eventPopup.classList.add('show');
+                }, 800);
+            }
+
+            window.closeEventPopup = function() {
+                if(eventPopup) {
+                    eventPopup.classList.remove('show');
+                }
+            };
         });
     </script>
 
