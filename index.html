@@ -493,6 +493,7 @@
             .price { font-size: 15px; }
             .main-logo-img { width: 240px; } 
             
+            /* SECȚIUNE OPTIMIZATĂ PENTRU AFIȘAREA PICTOGRAMELOR PE MOBIL */
             h2 { 
                 font-size: 18px; 
                 gap: 12px; 
@@ -557,7 +558,7 @@
                     <path d="M17 8h1a4 4 0 1 1 0 8h-1" />
                     <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z" />
                 </svg>
-                Liquid Luxury
+                Bar&Brew
             </button>
         </div>
     </div>
@@ -629,6 +630,7 @@
             </div>
         </section>
 
+        <!-- LAYERS SECTION REORGANIZAT -->
         <section class="menu-section is-visible">
             <div class="content-wrapper">
                 <h2>
@@ -1050,15 +1052,11 @@
                 
                 <div class="menu-grid">
                     <div>
-                        <div class="category-label">
+                        <div class="category-label" style="opacity: 0; pointer-events: none;">
                             <span class="category-svg-container">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M12 21a9 9 0 0 0 9-9H3a9 9 0 0 0 9 9Z" />
-                                    <circle cx="12" cy="12" r="1.5" />
-                                    <path d="M12 7c0-2.5 2-4 2-4" />
-                                </svg>
+                                <svg viewBox="0 0 24 24"></svg>
                             </span>
-                            DESSERTS
+                            SPACER
                         </div>
                         <table>
                             <tr>
@@ -2124,7 +2122,6 @@
         </section>
     </div>
 
-    <!-- LEGAL COMPLIANCE & ALLERGENS MAP DISCRET -->
     <footer style="text-align: center; padding: 60px 20px 100px; border-top: 1px solid var(--border); margin-top: 60px; position: relative; z-index: 10;">
         <p style="color: var(--text-dim); font-size: 13px; font-family: var(--font-main); letter-spacing: 1px; margin-bottom: 20px;">
             * Preparatele noastre pot conține alergeni. Cifrele din paranteze sau parantezele drepte indică grupa de alergeni de mai jos.
@@ -2167,6 +2164,70 @@
         document.addEventListener("DOMContentLoaded", () => {
             const sections = document.querySelectorAll('.menu-section');
             const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+            
+            // Crearea container-ului pentru tooltip-ul poveștii
+            const tooltip = document.createElement('div');
+            tooltip.className = 'story-tooltip';
+            document.body.appendChild(tooltip);
+            
+            let activeTooltipIcon = null;
+
+            // Logică pentru Povești la Click
+            const icons = document.querySelectorAll('.title-svg-container');
+            
+            icons.forEach(icon => {
+                icon.addEventListener('click', function(e) {
+                    e.stopPropagation(); 
+                    
+                    const storyTitle = this.getAttribute('data-story');
+                    const storyText = this.getAttribute('data-text');
+                    
+                    if (!storyTitle || !storyText) return; 
+                    
+                    if(activeTooltipIcon === this && tooltip.classList.contains('show')) {
+                        tooltip.classList.remove('show');
+                        activeTooltipIcon = null;
+                        return;
+                    }
+
+                    // Setam continutul
+                    tooltip.innerHTML = `<strong>${storyTitle}</strong>${storyText}`;
+                    
+                    // Calculam pozitia
+                    const rect = this.getBoundingClientRect();
+                    const tooltipRect = tooltip.getBoundingClientRect();
+                    
+                    const topPos = rect.top + window.scrollY - tooltipRect.height - 15;
+                    const leftPos = rect.left + window.scrollX + (rect.width / 2) - (tooltipRect.width / 2);
+
+                    tooltip.style.top = `${topPos}px`;
+                    tooltip.style.left = `${leftPos}px`;
+                    
+                    if(leftPos < 10) {
+                        tooltip.style.left = '10px';
+                    } else if(leftPos + tooltipRect.width > window.innerWidth - 10) {
+                        tooltip.style.left = `${window.innerWidth - tooltipRect.width - 10}px`;
+                    }
+                    
+                    tooltip.classList.add('show');
+                    activeTooltipIcon = this;
+                });
+            });
+
+            // Ascundem povestea cand dam scroll sau click altundeva
+            window.addEventListener('scroll', () => {
+                if (tooltip.classList.contains('show')) {
+                    tooltip.classList.remove('show');
+                    activeTooltipIcon = null;
+                }
+            }, { passive: true });
+            
+            document.addEventListener('click', () => {
+                if (tooltip.classList.contains('show')) {
+                    tooltip.classList.remove('show');
+                    activeTooltipIcon = null;
+                }
+            });
 
             const observer = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
