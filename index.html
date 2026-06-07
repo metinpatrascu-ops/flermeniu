@@ -3,7 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>flērcafē - Meniu Premium</title>
+    <meta name="description" content="flērcafē — Cafenea de specialitate în inima MARe, București. Meniu premium cu cafea artizanală, food levantine și cocktailuri semnătură. Bulevardul Primăverii 15.">
+    <meta name="keywords" content="flercafe, cafenea bucuresti, speciality coffee, meniu, cocktailuri, levantine food, MARe, Primaverii">
+    <meta property="og:title" content="flērcafē — Art, Coffee & Spirits">
+    <meta property="og:description" content="O pauză deliberată în mijlocul culturii moderne. Cafea de specialitate, food levantine și cocktailuri semnătură în București.">
+    <meta property="og:url" content="https://flercafe.ro">
+    <meta property="og:type" content="restaurant">
+    <meta name="theme-color" content="#3B1F0F">
+    <title>flērcafē — Art, Coffee & Spirits | București</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
@@ -515,9 +522,281 @@
             .menu-tabs { gap: 8px; padding: 0 3%; }
             .tab-btn { font-size: 11px; padding: 10px 14px; letter-spacing: 1px; }
         }
+
+        /* ===== TOP INFO BAR ===== */
+        .top-bar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 200;
+            background: rgba(30, 14, 5, 0.97);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(179, 93, 45, 0.25);
+            padding: 10px 0;
+        }
+
+        .top-bar-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .top-bar-brand {
+            font-family: var(--font-accent);
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 1px;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .top-bar-info {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            flex-wrap: wrap;
+        }
+
+        .top-bar-item {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 12px;
+            color: var(--text-dim);
+            white-space: nowrap;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .top-bar-item:hover { color: var(--gold); }
+
+        .top-bar-item i {
+            color: var(--gold);
+            font-size: 13px;
+        }
+
+        .top-bar-socials {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .top-bar-socials a {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(179, 93, 45, 0.3);
+            border-radius: 50%;
+            color: var(--text-dim);
+            font-size: 13px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .top-bar-socials a:hover {
+            background: var(--gold);
+            color: var(--brand-brown-dark);
+            border-color: var(--gold);
+        }
+
+        /* Offset body pentru header */
+        body { padding-top: 53px; }
+
+        .menu-tabs-wrapper { top: 53px; }
+
+        @media (max-width: 768px) {
+            .top-bar-info { display: none; }
+            .top-bar-inner { justify-content: space-between; }
+            body { padding-top: 49px; }
+            .menu-tabs-wrapper { top: 49px; }
+        }
+
+        /* ===== FOOTER ===== */
+        .site-footer {
+            position: relative;
+            z-index: 10;
+            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.35);
+            border-top: 1.5px solid rgba(179, 93, 45, 0.25);
+        }
+
+        .footer-main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 5% 40px;
+            display: grid;
+            grid-template-columns: 1.4fr 1fr 1fr 1fr;
+            gap: 50px;
+        }
+
+        .footer-col h4 {
+            font-family: var(--font-main);
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 18px;
+        }
+
+        .footer-col p {
+            font-size: 13px;
+            color: var(--text-dim);
+            line-height: 1.8;
+        }
+
+        .footer-col a {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            font-size: 13px;
+            color: var(--text-dim);
+            text-decoration: none;
+            margin-bottom: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-col a i { color: var(--gold); font-size: 13px; width: 14px; }
+        .footer-col a:hover { color: var(--gold); }
+
+        .footer-brand {
+            font-family: var(--font-accent);
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 12px;
+        }
+
+        .footer-tagline {
+            font-family: var(--font-accent);
+            font-style: italic;
+            font-size: 14px;
+            color: var(--text-dim);
+            margin-bottom: 20px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .footer-social a {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(179, 93, 45, 0.3);
+            border-radius: 50%;
+            color: var(--text-dim);
+            font-size: 14px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin-bottom: 0;
+        }
+
+        .footer-social a:hover {
+            background: var(--gold);
+            color: var(--brand-brown-dark);
+            border-color: var(--gold);
+        }
+
+        .footer-divider {
+            border-top: 1px solid rgba(179, 93, 45, 0.15);
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 22px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            color: rgba(212, 192, 169, 0.5);
+            letter-spacing: 0.5px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        /* Back to top */
+        .back-to-top {
+            position: fixed;
+            bottom: 28px;
+            right: 24px;
+            z-index: 150;
+            width: 42px;
+            height: 42px;
+            background: var(--gold);
+            border: none;
+            border-radius: 50%;
+            color: var(--brand-brown-dark);
+            font-size: 17px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s ease, transform 0.35s ease;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.4);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .back-to-top:hover { transform: translateY(-3px); }
+
+        @media (max-width: 900px) {
+            .footer-main { grid-template-columns: 1fr 1fr; gap: 40px; }
+        }
+
+        @media (max-width: 520px) {
+            .footer-main { grid-template-columns: 1fr; gap: 32px; }
+            .footer-divider { flex-direction: column; text-align: center; }
+        }
     </style>
 </head>
 <body>
+
+    <!-- TOP INFO BAR -->
+    <header class="top-bar">
+        <div class="top-bar-inner">
+            <a href="https://flercafe.ro" class="top-bar-brand">flērcafē</a>
+            <div class="top-bar-info">
+                <a href="https://maps.google.com/?q=Bulevardul+Primaverii+15+Bucuresti" target="_blank" class="top-bar-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    Bulevardul Primăverii 15, MARe · București
+                </a>
+                <span class="top-bar-item">
+                    <i class="far fa-clock"></i>
+                    All Day
+                </span>
+                <a href="mailto:contact@flercafe.ro" class="top-bar-item">
+                    <i class="far fa-envelope"></i>
+                    contact@flercafe.ro
+                </a>
+            </div>
+            <div class="top-bar-socials">
+                <a href="https://instagram.com/flercafe" target="_blank" title="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://facebook.com/flercafe" target="_blank" title="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://tiktok.com/@flercafe" target="_blank" title="TikTok">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+            </div>
+        </div>
+    </header>
 
     <div class="bg-watermark">
         <img src="logofler.png" alt="" class="bg-watermark-logo" onerror="this.style.display='none';">
@@ -2160,6 +2439,62 @@
         </div>
     </footer>
 
+    <!-- BACK TO TOP -->
+    <button class="back-to-top" id="back-to-top" title="Înapoi sus">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="footer-main">
+            <div class="footer-col">
+                <div class="footer-brand">flērcafē</div>
+                <p class="footer-tagline">Art, Coffee & Spirits</p>
+                <p>O pauză deliberată în mijlocul culturii moderne, unde cafeaua de specialitate întâlnește arta contemporană.</p>
+                <div class="footer-social">
+                    <a href="https://instagram.com/flercafe" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://facebook.com/flercafe" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://tiktok.com/@flercafe" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Locație</h4>
+                <a href="https://maps.google.com/?q=Bulevardul+Primaverii+15+Bucuresti" target="_blank">
+                    <i class="fas fa-map-marker-alt"></i>
+                    Bulevardul Primăverii 15
+                </a>
+                <a href="https://maps.google.com/?q=Bulevardul+Primaverii+15+Bucuresti" target="_blank">
+                    <i class="fas fa-building"></i>
+                    MARe, București
+                </a>
+                <a href="https://maps.google.com/?q=Bulevardul+Primaverii+15+Bucuresti" target="_blank">
+                    <i class="fas fa-directions"></i>
+                    Deschide în Maps
+                </a>
+            </div>
+            <div class="footer-col">
+                <h4>Program</h4>
+                <p style="margin-bottom: 8px;"><span style="color: var(--gold); font-weight: 600;">All Day</span></p>
+                <p>Meniu disponibil toată ziua, de la prima cafea până la ultimul cocktail.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <a href="mailto:contact@flercafe.ro">
+                    <i class="far fa-envelope"></i>
+                    contact@flercafe.ro
+                </a>
+                <a href="https://flercafe.ro" target="_blank">
+                    <i class="fas fa-globe"></i>
+                    flercafe.ro
+                </a>
+            </div>
+        </div>
+        <div class="footer-divider">
+            <span>© 2026 flērcafē · All rights reserved</span>
+            <span>Bulevardul Primăverii 15 · MARe · București</span>
+        </div>
+    </footer>
+
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const sections = document.querySelectorAll('.menu-section');
@@ -2311,6 +2646,15 @@
                 img.src = imagesToTry[imgIndex];
             }
             tryNextImage();
+
+            /* BACK TO TOP */
+            const backToTopBtn = document.getElementById('back-to-top');
+            window.addEventListener('scroll', () => {
+                backToTopBtn.classList.toggle('visible', window.scrollY > 400);
+            }, { passive: true });
+            backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
         });
     </script>
 
