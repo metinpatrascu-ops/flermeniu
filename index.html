@@ -762,9 +762,179 @@
             .footer-main { grid-template-columns: 1fr; gap: 32px; }
             .footer-divider { flex-direction: column; text-align: center; }
         }
+
+        /* ===== WELCOME POPUP ===== */
+        .welcome-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            background: rgba(20, 10, 4, 0.72);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+
+        .welcome-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .welcome-modal {
+            position: relative;
+            max-width: 420px;
+            width: 100%;
+            background: linear-gradient(160deg, rgba(70, 38, 18, 0.97), rgba(40, 20, 9, 0.98));
+            border: 1px solid rgba(179, 93, 45, 0.35);
+            border-radius: 16px;
+            padding: 38px 32px 30px;
+            text-align: center;
+            box-shadow: 0 25px 70px rgba(0,0,0,0.5);
+            transform: translateY(24px) scale(0.97);
+            transition: transform 0.45s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .welcome-overlay.visible .welcome-modal {
+            transform: translateY(0) scale(1);
+        }
+
+        .welcome-close {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 1px solid rgba(179, 93, 45, 0.3);
+            background: transparent;
+            color: var(--text-dim);
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s ease;
+        }
+
+        .welcome-close:hover {
+            background: var(--gold);
+            color: var(--brand-brown-dark);
+            border-color: var(--gold);
+        }
+
+        .welcome-brand {
+            font-family: var(--font-accent);
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 6px;
+        }
+
+        .welcome-icon {
+            font-size: 30px;
+            color: var(--gold);
+            margin-bottom: 14px;
+        }
+
+        .welcome-title {
+            font-family: var(--font-accent);
+            font-style: italic;
+            font-size: 19px;
+            color: var(--text-main);
+            line-height: 1.5;
+            margin-bottom: 14px;
+        }
+
+        .welcome-text {
+            font-size: 13px;
+            color: var(--text-dim);
+            line-height: 1.8;
+            margin-bottom: 26px;
+        }
+
+        .welcome-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .welcome-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 13px 20px;
+            border-radius: 8px;
+            font-family: var(--font-main);
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .welcome-btn-primary {
+            background: var(--gold);
+            color: var(--brand-brown-dark);
+        }
+
+        .welcome-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(179, 93, 45, 0.35);
+        }
+
+        .welcome-btn-secondary {
+            background: transparent;
+            color: var(--text-dim);
+            border: 1px solid rgba(179, 93, 45, 0.3);
+        }
+
+        .welcome-btn-secondary:hover {
+            color: var(--text-main);
+            border-color: var(--gold);
+        }
+
+        @media (max-width: 480px) {
+            .welcome-modal { padding: 32px 22px 24px; }
+            .welcome-title { font-size: 17px; }
+        }
     </style>
 </head>
 <body>
+
+    <!-- WELCOME POPUP -->
+    <div class="welcome-overlay" id="welcome-overlay">
+        <div class="welcome-modal">
+            <button class="welcome-close" id="welcome-close" aria-label="Închide">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="welcome-icon"><i class="fas fa-mug-hot"></i></div>
+            <div class="welcome-brand">flērcafē</div>
+            <p class="welcome-title">Meniul nostru e gândit ca o poveste, capitol cu capitol.</p>
+            <p class="welcome-text">
+                De la <em>Openings</em> și <em>Daily Ritual</em>, prin <em>Compositions</em> și <em>Centerpiece</em>,
+                până la <em>Finale</em> — fiecare secțiune e un pas într-o călătorie gândită cu grijă.
+                Sperăm ca experiența ta la flērcafē să fi fost propriul tău capitol memorabil,
+                iar dacă a fost, ne-ar însemna mult să-l spui și altora printr-o recenzie. 🤍
+            </p>
+            <div class="welcome-actions">
+                <a href="https://search.google.com/local/writereview?placeid=ChIJ3dfcCJkDs0ARUOwAjSCSRGo" target="_blank" class="welcome-btn welcome-btn-primary">
+                    <i class="fab fa-google"></i>
+                    Lasă o recenzie ⭐
+                </a>
+                <button class="welcome-btn welcome-btn-secondary" id="welcome-continue">
+                    Continuă spre meniu
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- TOP INFO BAR -->
     <header class="top-bar">
@@ -2650,6 +2820,27 @@
             }, { passive: true });
             backToTopBtn.addEventListener('click', () => {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            /* WELCOME POPUP */
+            const welcomeOverlay = document.getElementById('welcome-overlay');
+            const welcomeClose = document.getElementById('welcome-close');
+            const welcomeContinue = document.getElementById('welcome-continue');
+
+            function closeWelcome() {
+                welcomeOverlay.classList.remove('visible');
+                document.body.style.overflow = '';
+            }
+
+            setTimeout(() => {
+                welcomeOverlay.classList.add('visible');
+                document.body.style.overflow = 'hidden';
+            }, 600);
+
+            welcomeClose.addEventListener('click', closeWelcome);
+            welcomeContinue.addEventListener('click', closeWelcome);
+            welcomeOverlay.addEventListener('click', (e) => {
+                if (e.target === welcomeOverlay) closeWelcome();
             });
         });
     </script>
