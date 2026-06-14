@@ -11,10 +11,16 @@
     <meta property="og:type" content="restaurant">
     <meta name="theme-color" content="#3B1F0F">
     <title>flērcafē — Art, Coffee & Spirits | București</title>
+
+    <!-- Preconnect pentru încărcare mai rapidă a fonturilor și iconițelor -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
         :root {
             --gold: #B35D2D; 
@@ -32,15 +38,24 @@
         
         body {
              background-color: var(--brand-brown);
-             background-image: radial-gradient(circle at top left, rgba(255, 238, 216, 0.08), transparent 24%),
-                               radial-gradient(circle at bottom right, rgba(255, 157, 60, 0.08), transparent 20%);
-             background-size: cover;
-             background-position: center;
-             background-attachment: fixed;
              font-family: var(--font-main);
              color: var(--text-main);
              overflow-x: hidden;
              scroll-behavior: smooth;
+        }
+
+        /* Fundal fix optimizat - separat de scroll pentru performanță pe mobil */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background-image: radial-gradient(circle at top left, rgba(255, 238, 216, 0.08), transparent 24%),
+                               radial-gradient(circle at bottom right, rgba(255, 157, 60, 0.08), transparent 20%);
+            background-size: cover;
+            background-position: center;
+            will-change: transform;
+            pointer-events: none;
         }
 
         /* WATERMARK BACKGROUND */
@@ -81,6 +96,7 @@
             padding: 16px 0;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
             margin-bottom: 40px;
+            will-change: transform;
         }
 
         .menu-tabs {
@@ -107,7 +123,7 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            transition: color 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), background-color 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), border-color 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             border-radius: 6px;
         }
 
@@ -346,7 +362,7 @@
             opacity: 0;
             visibility: hidden;
             transform: translateY(10px);
-            transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+            transition: opacity 0.3s cubic-bezier(0.165, 0.84, 0.44, 1), visibility 0.3s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
             pointer-events: none;
             text-align: center;
@@ -533,6 +549,7 @@
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(179, 93, 45, 0.25);
             padding: 10px 0;
+            will-change: transform;
         }
 
         .top-bar-inner {
@@ -597,7 +614,7 @@
             color: var(--text-dim);
             font-size: 13px;
             text-decoration: none;
-            transition: all 0.3s ease;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
         }
 
         .top-bar-socials a:hover {
@@ -699,7 +716,7 @@
             color: var(--text-dim);
             font-size: 14px;
             text-decoration: none;
-            transition: all 0.3s ease;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
             margin-bottom: 0;
         }
 
@@ -818,7 +835,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.25s ease;
+            transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
         }
 
         .welcome-close:hover {
@@ -877,7 +894,7 @@
             text-decoration: none;
             cursor: pointer;
             border: none;
-            transition: all 0.3s ease;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .welcome-btn-primary {
@@ -947,7 +964,7 @@
                 </a>
                 <span class="top-bar-item">
                     <i class="far fa-clock"></i>
-                    All Day
+                    09:00 - 19:00
                 </span>
                 <a href="mailto:contact@flercafe.ro" class="top-bar-item">
                     <i class="far fa-envelope"></i>
@@ -2636,8 +2653,8 @@
             </div>
             <div class="footer-col">
                 <h4>Program</h4>
-                <p style="margin-bottom: 8px;"><span style="color: var(--gold); font-weight: 600;">All Day</span></p>
-                <p>Meniu disponibil toată ziua, de la prima cafea până la ultimul cocktail.</p>
+                <p style="margin-bottom: 8px;"><span style="color: var(--gold); font-weight: 600;">09:00 - 19:00</span></p>
+                <p>Zilnic, de la prima cafea până la ultimul cocktail.</p>
             </div>
             <div class="footer-col">
                 <h4>Contact</h4>
