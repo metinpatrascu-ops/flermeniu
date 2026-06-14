@@ -844,6 +844,34 @@
             border-color: var(--gold);
         }
 
+        .welcome-lang-toggle {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            min-width: 30px;
+            height: 30px;
+            padding: 0 8px;
+            border-radius: 15px;
+            border: 1px solid rgba(179, 93, 45, 0.3);
+            background: transparent;
+            color: var(--text-dim);
+            font-family: var(--font-main);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+        }
+
+        .welcome-lang-toggle:hover {
+            background: var(--gold);
+            color: var(--brand-brown-dark);
+            border-color: var(--gold);
+        }
+
         .welcome-brand {
             font-family: var(--font-accent);
             font-size: 26px;
@@ -932,21 +960,24 @@
             <button class="welcome-close" id="welcome-close" aria-label="Închide">
                 <i class="fas fa-times"></i>
             </button>
+            <button class="welcome-lang-toggle" id="welcome-lang-toggle" type="button">EN</button>
             <div class="welcome-icon"><i class="fas fa-mug-hot"></i></div>
             <div class="welcome-brand">flērcafē</div>
-            <p class="welcome-title">Meniul nostru e gândit ca o poveste, capitol cu capitol.</p>
-            <p class="welcome-text">
+            <p class="welcome-title" id="welcome-title" data-ro="Meniul nostru e gândit ca o poveste, capitol cu capitol." data-en="Our menu is crafted like a story, chapter by chapter.">Meniul nostru e gândit ca o poveste, capitol cu capitol.</p>
+            <p class="welcome-text" id="welcome-text"
+               data-ro="De la <em>Openings</em> și <em>Daily Ritual</em>, prin <em>Compositions</em> și <em>Centerpiece</em>, până la <em>Finale</em> — fiecare secțiune e un pas într-o călătorie gândită cu grijă. Sperăm ca experiența ta la flērcafē să fi fost propriul tău capitol memorabil, iar dacă a fost, ne-ar însemna mult să-l spui și altora printr-o recenzie. 🤍"
+               data-en="From <em>Openings</em> and <em>Daily Ritual</em>, through <em>Compositions</em> and <em>Centerpiece</em>, all the way to <em>Finale</em> — every section is a step in a carefully crafted journey. We hope your time at flērcafē was a memorable chapter of its own, and if it was, it would mean a lot if you shared it with others through a review. 🤍">
                 De la <em>Openings</em> și <em>Daily Ritual</em>, prin <em>Compositions</em> și <em>Centerpiece</em>,
                 până la <em>Finale</em> — fiecare secțiune e un pas într-o călătorie gândită cu grijă.
                 Sperăm ca experiența ta la flērcafē să fi fost propriul tău capitol memorabil,
                 iar dacă a fost, ne-ar însemna mult să-l spui și altora printr-o recenzie. 🤍
             </p>
             <div class="welcome-actions">
-                <a href="https://search.google.com/local/writereview?placeid=ChIJ3dfcCJkDs0ARUOwAjSCSRGo" target="_blank" class="welcome-btn welcome-btn-primary">
+                <a href="https://search.google.com/local/writereview?placeid=ChIJ3dfcCJkDs0ARUOwAjSCSRGo" target="_blank" class="welcome-btn welcome-btn-primary" id="welcome-review-btn" data-ro="Lasă o recenzie ⭐" data-en="Leave a review ⭐">
                     <i class="fab fa-google"></i>
-                    Lasă o recenzie ⭐
+                    <span>Lasă o recenzie ⭐</span>
                 </a>
-                <button class="welcome-btn welcome-btn-secondary" id="welcome-continue">
+                <button class="welcome-btn welcome-btn-secondary" id="welcome-continue" data-ro="Continuă spre meniu" data-en="Continue to menu">
                     Continuă spre meniu
                 </button>
             </div>
@@ -2858,6 +2889,27 @@
             welcomeContinue.addEventListener('click', closeWelcome);
             welcomeOverlay.addEventListener('click', (e) => {
                 if (e.target === welcomeOverlay) closeWelcome();
+            });
+
+            /* LANGUAGE TOGGLE RO/EN */
+            const langToggle = document.getElementById('welcome-lang-toggle');
+            const welcomeTitle = document.getElementById('welcome-title');
+            const welcomeText = document.getElementById('welcome-text');
+            const welcomeReviewBtn = document.getElementById('welcome-review-btn');
+            const welcomeContinueBtn = document.getElementById('welcome-continue');
+            let currentLang = 'ro';
+
+            langToggle.addEventListener('click', () => {
+                currentLang = currentLang === 'ro' ? 'en' : 'ro';
+                langToggle.textContent = currentLang === 'ro' ? 'EN' : 'RO';
+
+                welcomeTitle.textContent = welcomeTitle.getAttribute(`data-${currentLang}`);
+                welcomeText.innerHTML = welcomeText.getAttribute(`data-${currentLang}`);
+
+                const reviewLabel = welcomeReviewBtn.querySelector('span');
+                reviewLabel.textContent = welcomeReviewBtn.getAttribute(`data-${currentLang}`);
+
+                welcomeContinueBtn.textContent = welcomeContinueBtn.getAttribute(`data-${currentLang}`);
             });
         });
     </script>
