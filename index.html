@@ -969,44 +969,7 @@
             .welcome-title { font-size: 17px; }
         }
 
-        /* ===== 1. CUSTOM CURSOR ===== */
-        @media (hover: hover) and (pointer: fine) {
-            * { cursor: none !important; }
-        }
-
-        .cursor-dot {
-            position: fixed;
-            top: 0; left: 0;
-            width: 8px; height: 8px;
-            background: var(--gold);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            transform: translate(-50%, -50%);
-            transition: transform 0.1s ease, opacity 0.2s ease;
-            mix-blend-mode: screen;
-        }
-
-        .cursor-ring {
-            position: fixed;
-            top: 0; left: 0;
-            width: 32px; height: 32px;
-            border: 1.5px solid rgba(179, 93, 45, 0.6);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9998;
-            transform: translate(-50%, -50%);
-            transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease, opacity 0.25s ease;
-        }
-
-        .cursor-ring.hovering {
-            width: 48px; height: 48px;
-            border-color: var(--gold);
-        }
-
-        @media (hover: none) {
-            .cursor-dot, .cursor-ring { display: none; }
-        }
+        /* cursor: original browser cursor păstrat */
 
         /* ===== 2. OPEN NOW INDICATOR ===== */
         .open-indicator {
@@ -1131,17 +1094,145 @@
             transform: translateX(-50%) translateY(0);
         }
 
-        .top-bar-brand { cursor: none !important; }
+
+
+
+        /* ===== TAB CINEMATIC TRANSITION ===== */
+        @keyframes layerExit {
+            from { opacity: 1; filter: blur(0px); transform: translateY(0); }
+            to   { opacity: 0; filter: blur(6px);  transform: translateY(-14px); }
+        }
+        .tab-content.exiting {
+            display: block !important;
+            animation: layerExit 0.28s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+            pointer-events: none;
+            position: absolute;
+            width: 100%;
+        }
+
+        /* ===== CURSOR TRAIL ===== */
+        .cursor-trail {
+            position: fixed;
+            width: 6px; height: 6px;
+            background: var(--gold);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9997;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.4s ease;
+            mix-blend-mode: screen;
+        }
+
+        /* ===== SPOTIFY WIDGET ===== */
+        .spotify-widget {
+            position: fixed;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 149;
+            background: rgba(18, 8, 3, 0.88);
+            border: 1px solid rgba(179, 93, 45, 0.25);
+            border-radius: 50px;
+            padding: 9px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 12px;
+            color: var(--text-dim);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .spotify-widget.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .spotify-bars {
+            display: flex;
+            align-items: flex-end;
+            gap: 2px;
+            height: 14px;
+        }
+        .spotify-bars span {
+            display: block;
+            width: 3px;
+            background: var(--gold);
+            border-radius: 2px;
+            animation: bars 1.2s ease-in-out infinite;
+        }
+        .spotify-bars span:nth-child(1) { height: 6px;  animation-delay: 0s; }
+        .spotify-bars span:nth-child(2) { height: 12px; animation-delay: 0.2s; }
+        .spotify-bars span:nth-child(3) { height: 8px;  animation-delay: 0.4s; }
+        .spotify-bars span:nth-child(4) { height: 14px; animation-delay: 0.1s; }
+        .spotify-bars span:nth-child(5) { height: 5px;  animation-delay: 0.3s; }
+        @keyframes bars {
+            0%, 100% { transform: scaleY(0.4); }
+            50%       { transform: scaleY(1); }
+        }
+        .spotify-label { font-style: italic; color: var(--text-dim); }
+        .spotify-label em { color: var(--gold); font-style: normal; }
+
+        /* ===== TONIGHT'S PICK / COUNTDOWN inside time-rec ===== */
+        .time-pick-badge {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--brand-brown-dark);
+            font-size: 9px;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 2px 7px;
+            border-radius: 4px;
+            margin-bottom: 5px;
+        }
+
+        .countdown-display {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--gold);
+            letter-spacing: 1px;
+            margin: 4px 0 2px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* ===== TIME THEME ===== */
+        body.theme-morning {
+            --gold: #C4702A;
+            --brand-brown: #7A3A10;
+        }
+        body.theme-evening {
+            --gold: #9E5535;
+            --brand-brown: #4A2008;
+            --brand-brown-dark: #2A1008;
+        }
+
+        @media (max-width: 600px) {
+            .spotify-widget { font-size: 11px; padding: 8px 14px; }
+        }
 
     </style>
 </head>
 <body>
 
 
-    <!-- CURSOR -->
-    <div class="cursor-dot" id="cursor-dot"></div>
-    <div class="cursor-ring" id="cursor-ring"></div>
 
+    <!-- SPOTIFY WIDGET -->
+    <div class="spotify-widget" id="spotify-widget">
+        <div class="spotify-bars">
+            <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <span class="spotify-label">acum la flēr · <em id="spotify-track">flērcafē vibes</em></span>
+    </div>
+
+    <div class="cursor-trail" id="trail-0" style="opacity:0.7;width:6px;height:6px;"></div>
+    <div class="cursor-trail" id="trail-1" style="opacity:0.6;width:5px;height:5px;"></div>
+    <div class="cursor-trail" id="trail-2" style="opacity:0.5;width:4px;height:4px;"></div>
+    <div class="cursor-trail" id="trail-3" style="opacity:0.4;width:3px;height:3px;"></div>
+    <div class="cursor-trail" id="trail-4" style="opacity:0.3;width:2px;height:2px;"></div>
+    <div class="cursor-trail" id="trail-5" style="opacity:0.2;width:1px;height:1px;"></div>
     <!-- SCROLL PROGRESS -->
     <div class="scroll-progress" id="scroll-progress"></div>
 
@@ -3011,22 +3102,10 @@
             const tabButtons = document.querySelectorAll('.tab-btn');
             const tabContents = document.querySelectorAll('.tab-content');
 
+            // Tab switching handled by cinematic transition below (section H)
+            // Păstrăm scroll behavior
             tabButtons.forEach(btn => {
                 btn.addEventListener('click', () => {
-                    const tabId = btn.getAttribute('data-tab');
-                    
-                    tabButtons.forEach(b => b.classList.remove('active'));
-                    tabContents.forEach(c => c.classList.remove('active'));
-                    
-                    btn.classList.add('active');
-                    const activeTabContent = document.getElementById(`${tabId}-tab`);
-                    activeTabContent.classList.add('active');
-                    
-                    // Reveal immediately all items on active layer
-                    const activeSections = activeTabContent.querySelectorAll('.menu-section');
-                    activeSections.forEach(s => s.classList.add('is-visible'));
-                    
-                    // Smooth scroll past intro if needed
                     const tabWrapper = document.querySelector('.menu-tabs-wrapper');
                     const rect = tabWrapper.getBoundingClientRect();
                     if (rect.top < 0) {
@@ -3100,34 +3179,7 @@
             });
 
 
-            /* ============================
-               1. CUSTOM CURSOR
-            ============================ */
-            const cursorDot  = document.getElementById('cursor-dot');
-            const cursorRing = document.getElementById('cursor-ring');
-            let mouseX = 0, mouseY = 0;
-            let ringX  = 0, ringY  = 0;
-
-            if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-                document.addEventListener('mousemove', e => {
-                    mouseX = e.clientX; mouseY = e.clientY;
-                    cursorDot.style.left = mouseX + 'px';
-                    cursorDot.style.top  = mouseY + 'px';
-                });
-
-                (function animateRing() {
-                    ringX += (mouseX - ringX) * 0.12;
-                    ringY += (mouseY - ringY) * 0.12;
-                    cursorRing.style.left = ringX + 'px';
-                    cursorRing.style.top  = ringY + 'px';
-                    requestAnimationFrame(animateRing);
-                })();
-
-                document.querySelectorAll('a, button, [data-story]').forEach(el => {
-                    el.addEventListener('mouseenter', () => cursorRing.classList.add('hovering'));
-                    el.addEventListener('mouseleave', () => cursorRing.classList.remove('hovering'));
-                });
-            }
+            /* cursor: original browser cursor păstrat */
 
             /* ============================
                2. OPEN NOW INDICATOR
@@ -3262,6 +3314,255 @@
                     const total = doc.scrollHeight - doc.clientHeight;
                     bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
                 }, { passive: true });
+            })();
+
+
+            /* ============================
+               A. MEMORIE LIMBĂ (localStorage)
+            ============================ */
+            try {
+                const savedLang = localStorage.getItem('fler_lang');
+                if (savedLang === 'en') {
+                    langToggle.click();
+                }
+            } catch(e) {}
+
+            langToggle.addEventListener('click', () => {
+                try { localStorage.setItem('fler_lang', currentLang); } catch(e) {}
+            });
+
+            /* ============================
+               B. KEYBOARD SHORTCUTS
+            ============================ */
+            document.addEventListener('keydown', e => {
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+                if (e.key === '1') {
+                    const foodBtn = document.querySelector('.tab-btn[data-tab="food"]');
+                    if (foodBtn && !foodBtn.classList.contains('active')) foodBtn.click();
+                }
+                if (e.key === '2') {
+                    const drinksBtn = document.querySelector('.tab-btn[data-tab="drinks"]');
+                    if (drinksBtn && !drinksBtn.classList.contains('active')) drinksBtn.click();
+                }
+            });
+
+            /* ============================
+               C. HAPTIC FEEDBACK (Vibration API)
+            ============================ */
+            document.querySelectorAll('.tab-btn, .welcome-btn, .back-to-top').forEach(el => {
+                el.addEventListener('click', () => {
+                    if (navigator.vibrate) navigator.vibrate(8);
+                });
+            });
+
+            /* ============================
+               D. PARTICULE DE ABUR (Canvas)
+            ============================ */
+            (function() {
+                const canvas = document.createElement('canvas');
+                canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;opacity:0.35;';
+                document.body.appendChild(canvas);
+                const ctx = canvas.getContext('2d');
+                let W = window.innerWidth, H = window.innerHeight;
+                canvas.width = W; canvas.height = H;
+
+                window.addEventListener('resize', () => {
+                    W = window.innerWidth; H = window.innerHeight;
+                    canvas.width = W; canvas.height = H;
+                }, { passive: true });
+
+                const particles = Array.from({ length: 28 }, () => ({
+                    x: Math.random() * W,
+                    y: Math.random() * H,
+                    r: Math.random() * 2.5 + 0.5,
+                    vx: (Math.random() - 0.5) * 0.2,
+                    vy: -(Math.random() * 0.4 + 0.1),
+                    alpha: Math.random() * 0.4 + 0.05,
+                }));
+
+                function drawParticles() {
+                    ctx.clearRect(0, 0, W, H);
+                    particles.forEach(p => {
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                        ctx.fillStyle = `rgba(212,192,169,${p.alpha})`;
+                        ctx.fill();
+                        p.x += p.vx;
+                        p.y += p.vy;
+                        p.alpha -= 0.0008;
+                        if (p.y < -10 || p.alpha <= 0) {
+                            p.x = Math.random() * W;
+                            p.y = H + 5;
+                            p.alpha = Math.random() * 0.35 + 0.05;
+                            p.vx = (Math.random() - 0.5) * 0.2;
+                            p.vy = -(Math.random() * 0.4 + 0.1);
+                            p.r = Math.random() * 2.5 + 0.5;
+                        }
+                    });
+                    requestAnimationFrame(drawParticles);
+                }
+                drawParticles();
+            })();
+
+            /* ============================
+               E. TEMĂ CROMATICĂ DUPĂ ORĂ
+            ============================ */
+            (function() {
+                const h = new Date().getHours();
+                if (h >= 9 && h < 12) {
+                    document.body.classList.add('theme-morning');
+                } else if (h >= 17) {
+                    document.body.classList.add('theme-evening');
+                }
+            })();
+
+            /* ============================
+               F. TONIGHT'S PICK + COUNTDOWN
+            ============================ */
+            (function() {
+                const rec     = document.getElementById('time-recommendation');
+                const recText = document.getElementById('time-rec-text');
+                const recLabel= document.getElementById('time-rec-label');
+                if (!rec) return;
+
+                const now  = new Date();
+                const h    = now.getHours();
+                const m    = now.getMinutes();
+                const mins = h * 60 + m;
+                const openMins  = 9 * 60;
+                const closeMins = 19 * 60;
+
+                if (mins < openMins || mins >= closeMins) {
+                    // COUNTDOWN la deschidere
+                    const openTomorrow = new Date();
+                    openTomorrow.setDate(openTomorrow.getDate() + (mins >= closeMins ? 1 : 0));
+                    openTomorrow.setHours(9, 0, 0, 0);
+                    if (mins < openMins) openTomorrow.setDate(openTomorrow.getDate());
+
+                    recLabel.textContent = 'suntem închiși momentan';
+                    recText.innerHTML = '<span class="countdown-display" id="countdown-clock">--:--:--</span><br>până la deschidere';
+
+                    setTimeout(() => rec.classList.add('visible'), 2500);
+
+                    function updateCountdown() {
+                        const diff = openTomorrow - new Date();
+                        if (diff <= 0) { rec.classList.remove('visible'); return; }
+                        const hh = String(Math.floor(diff / 3600000)).padStart(2, '0');
+                        const mm = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
+                        const ss = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
+                        const el = document.getElementById('countdown-clock');
+                        if (el) el.textContent = hh + ':' + mm + ':' + ss;
+                    }
+                    updateCountdown();
+                    setInterval(updateCountdown, 1000);
+                    return;
+                }
+
+                if (h >= 17) {
+                    // TONIGHT'S PICK
+                    const picks = [
+                        { name: 'Velvet Espresso Martini', note: 'seara perfectă într-un pahar.' },
+                        { name: 'Negroni', note: 'clasic, echilibrat, fără compromisuri.' },
+                        { name: 'Old Fashioned', note: 'pentru cei care știu ce vor.' },
+                        { name: 'Cherry Silk', note: 'delicat și profund în același timp.' },
+                        { name: 'Arak Madu', note: 'o poveste levantină în fiecare înghițitură.' },
+                        { name: 'Fler Boozy Affogato', note: 'finalul perfect pentru orice seară.' },
+                    ];
+                    const pick = picks[new Date().getDay() % picks.length];
+                    recLabel.innerHTML = '<span class="time-pick-badge">Tonight's Pick</span>';
+                    recText.innerHTML = '<strong style="color:var(--text-main);font-size:14px;">' + pick.name + '</strong><br>' + pick.note;
+                    setTimeout(() => rec.classList.add('visible'), 2500);
+                }
+
+                const recClose = document.getElementById('time-rec-close');
+                if (recClose) recClose.addEventListener('click', () => rec.classList.remove('visible'));
+            })();
+
+            /* ============================
+               G. SPOTIFY WIDGET
+            ============================ */
+            (function() {
+                const widget = document.getElementById('spotify-widget');
+                if (!widget) return;
+                const tracks = [
+                    'Arabic Soul Sessions', 'flērcafē vibes', 'Morning Ritual',
+                    'Late Afternoon Jazz', 'Levant Lounge', 'Specialty Coffee Sounds'
+                ];
+                const track = document.getElementById('spotify-track');
+                if (track) track.textContent = tracks[new Date().getHours() % tracks.length];
+                setTimeout(() => widget.classList.add('visible'), 3500);
+            })();
+
+            /* ============================
+               H. TRANZIȚIE CINEMATICĂ TABS (override)
+            ============================ */
+            tabButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const tabId = btn.getAttribute('data-tab');
+                    const currentActive = document.querySelector('.tab-content.active');
+
+                    if (currentActive && currentActive.id !== tabId + '-tab') {
+                        currentActive.classList.add('exiting');
+                        setTimeout(() => {
+                            currentActive.classList.remove('active', 'exiting');
+
+                            tabButtons.forEach(b => b.classList.remove('active'));
+                            btn.classList.add('active');
+
+                            const next = document.getElementById(tabId + '-tab');
+                            next.classList.add('active');
+                            next.querySelectorAll('.menu-section').forEach(s => s.classList.add('is-visible'));
+
+                            if (navigator.vibrate) navigator.vibrate([5, 30, 5]);
+                        }, 280);
+                    }
+                });
+            });
+
+            /* ============================
+               I. TRAIL (desktop mouse + mobile touch)
+            ============================ */
+            (function() {
+                const trails = Array.from({ length: 6 }, (_, i) => document.getElementById('trail-' + i));
+                const positions = Array.from({ length: 6 }, () => ({ x: -100, y: -100 }));
+                let curX = -100, curY = -100, active = false;
+
+                // Desktop
+                document.addEventListener('mousemove', e => {
+                    curX = e.clientX; curY = e.clientY; active = true;
+                });
+                document.addEventListener('mouseleave', () => { active = false; });
+
+                // Mobile touch
+                document.addEventListener('touchmove', e => {
+                    const t = e.touches[0];
+                    curX = t.clientX; curY = t.clientY; active = true;
+                }, { passive: true });
+                document.addEventListener('touchend', () => {
+                    // fade out treptat după touch end
+                    setTimeout(() => { active = false; }, 300);
+                }, { passive: true });
+
+                (function animateTrail() {
+                    if (active) {
+                        positions[0].x += (curX - positions[0].x) * 0.5;
+                        positions[0].y += (curY - positions[0].y) * 0.5;
+                        for (let i = 1; i < 6; i++) {
+                            positions[i].x += (positions[i-1].x - positions[i].x) * 0.45;
+                            positions[i].y += (positions[i-1].y - positions[i].y) * 0.45;
+                        }
+                        trails.forEach((t, i) => {
+                            if (t) {
+                                t.style.left    = positions[i].x + 'px';
+                                t.style.top     = positions[i].y + 'px';
+                                t.style.opacity = String(0.65 - i * 0.09);
+                            }
+                        });
+                    } else {
+                        trails.forEach(t => { if (t) t.style.opacity = '0'; });
+                    }
+                    requestAnimationFrame(animateTrail);
+                })();
             })();
 
             /* LANGUAGE TOGGLE RO/EN */
