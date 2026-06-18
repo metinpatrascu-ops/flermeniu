@@ -974,6 +974,89 @@
         /* ===== PARALLAX ===== */
         .bg-watermark { will-change: transform; }
 
+
+        /* ===== CURSOR CUSTOM ===== */
+        @media (hover: hover) and (pointer: fine) {
+            * { cursor: none !important; }
+        }
+        .cursor-dot {
+            position: fixed; top: 0; left: 0;
+            width: 8px; height: 8px; background: var(--gold);
+            border-radius: 50%; pointer-events: none; z-index: 9999;
+            transform: translate(-50%, -50%);
+            mix-blend-mode: screen;
+        }
+        .cursor-ring {
+            position: fixed; top: 0; left: 0;
+            width: 32px; height: 32px;
+            border: 1.5px solid rgba(179,93,45,0.6);
+            border-radius: 50%; pointer-events: none; z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease;
+        }
+        .cursor-ring.hovering { width: 48px; height: 48px; border-color: var(--gold); }
+        @media (hover: none) { .cursor-dot, .cursor-ring { display: none; } }
+
+        /* ===== RECOMANDARE DUPĂ ORĂ ===== */
+        .time-recommendation {
+            position: fixed; bottom: 80px; left: 24px; z-index: 150;
+            max-width: 230px;
+            background: rgba(30,14,5,0.92);
+            border: 1px solid rgba(179,93,45,0.3); border-radius: 12px;
+            padding: 12px 16px; font-size: 12px; color: var(--text-dim); line-height: 1.5;
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            opacity: 0; transform: translateY(10px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            pointer-events: none;
+        }
+        .time-recommendation.visible { opacity: 1; transform: translateY(0); pointer-events: all; }
+        .time-recommendation strong { display: block; color: var(--gold); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+        .time-rec-close { position: absolute; top: 6px; right: 8px; background: none; border: none; color: rgba(212,192,169,0.4); cursor: pointer; font-size: 11px; padding: 2px; }
+        .time-rec-close:hover { color: var(--gold); }
+        @media (max-width: 600px) { .time-recommendation { left: 16px; bottom: 90px; max-width: 200px; } }
+
+        /* ===== EASTER EGG TOAST ===== */
+        .easter-egg-toast {
+            position: fixed; bottom: 28px; left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: rgba(30,14,5,0.96);
+            border: 1px solid rgba(179,93,45,0.4); border-radius: 24px;
+            padding: 12px 24px; font-family: var(--font-accent); font-style: italic; font-size: 14px;
+            color: var(--text-dim); white-space: nowrap; z-index: 5000;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            backdrop-filter: blur(12px);
+        }
+        .easter-egg-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        /* ===== SCROLL PROGRESS BAR ===== */
+        .scroll-progress {
+            position: fixed; top: 0; left: 0; height: 2px; width: 0%;
+            background: linear-gradient(90deg, var(--gold), rgba(179,93,45,0.4));
+            z-index: 1000; transition: width 0.05s linear; pointer-events: none;
+        }
+
+
+        /* ===== TOUCH TRAIL (mobil) ===== */
+        .touch-particle {
+            position: fixed;
+            width: 6px; height: 6px;
+            background: var(--gold);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9997;
+            transform: translate(-50%, -50%);
+            mix-blend-mode: screen;
+            animation: touchFade 0.6s ease-out forwards;
+        }
+        @keyframes touchFade {
+            0%   { opacity: 0.7; transform: translate(-50%, -50%) scale(1); }
+            100% { opacity: 0;   transform: translate(-50%, -50%) scale(0.2); }
+        }
+        @media (hover: hover) and (pointer: fine) {
+            .touch-particle { display: none; }
+        }
+
     </style>
 </head>
 <body>
@@ -997,14 +1080,8 @@
                 </a>
             </div>
             <div class="top-bar-socials">
-                <a href="https://instagram.com/flercafe" target="_blank" title="Instagram">
+                <a href="https://www.instagram.com/fler__cafe/" target="_blank" title="Instagram">
                     <i class="fab fa-instagram"></i>
-                </a>
-                <a href="https://facebook.com/flercafe" target="_blank" title="Facebook">
-                    <i class="fab fa-facebook-f"></i>
-                </a>
-                <a href="https://tiktok.com/@flercafe" target="_blank" title="TikTok">
-                    <i class="fab fa-tiktok"></i>
                 </a>
             </div>
         </div>
@@ -2664,9 +2741,7 @@
                 <p class="footer-tagline">Art, Coffee & Spirits</p>
                 <p>O pauză deliberată în mijlocul culturii moderne, unde cafeaua de specialitate întâlnește arta contemporană.</p>
                 <div class="footer-social">
-                    <a href="https://instagram.com/flercafe" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="https://facebook.com/flercafe" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://tiktok.com/@flercafe" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://www.instagram.com/fler__cafe/" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
             <div class="footer-col">
@@ -2753,6 +2828,109 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
+
+
+            /* ============================
+               1. CURSOR CUSTOM
+            ============================ */
+            (function() {
+                const dot  = document.getElementById('cursor-dot');
+                const ring = document.getElementById('cursor-ring');
+                if (!dot || !ring) return;
+                if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+                let mx = 0, my = 0, rx = 0, ry = 0;
+                document.addEventListener('mousemove', e => {
+                    mx = e.clientX; my = e.clientY;
+                    dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+                });
+                (function animate() {
+                    rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+                    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+                    requestAnimationFrame(animate);
+                })();
+                document.querySelectorAll('a, button, [data-story]').forEach(el => {
+                    el.addEventListener('mouseenter', () => ring.classList.add('hovering'));
+                    el.addEventListener('mouseleave', () => ring.classList.remove('hovering'));
+                });
+            })();
+
+            /* ============================
+               3. RECOMANDARE DUPĂ ORĂ
+            ============================ */
+            (function() {
+                const rec = document.getElementById('time-recommendation');
+                const recText = document.getElementById('time-rec-text');
+                const recLabel = document.getElementById('time-rec-label');
+                const recClose = document.getElementById('time-rec-close');
+                if (!rec) return;
+                const h = new Date().getHours();
+                let label = '', msg = '';
+                if      (h >= 9  && h < 11) { label = 'bună dimineața ☀️'; msg = 'Momentul perfect pentru un Daily Ritual — cafeaua ta de început.'; }
+                else if (h >= 11 && h < 14) { label = 'ora brunch-ului 🍳'; msg = 'Încearcă una din Compositions — salate levantine gândite cu grijă.'; }
+                else if (h >= 14 && h < 17) { label = 'după-amiaza leneșă ☁️'; msg = 'Un Cold Brew sau Quiet Storm e tot ce mai ai nevoie acum.'; }
+                else if (h >= 17 && h < 19) { label = 'golden hour 🌇'; msg = 'Lasă-te pe mâna barmanului — Velvet Hour te așteaptă.'; }
+                else return;
+                recLabel.textContent = label;
+                recText.textContent = msg;
+                setTimeout(() => rec.classList.add('visible'), 2500);
+                recClose.addEventListener('click', () => rec.classList.remove('visible'));
+            })();
+
+            /* ============================
+               5. EASTER EGG (3 clickuri pe logo)
+            ============================ */
+            (function() {
+                const logo  = document.getElementById('brand-logo');
+                const toast = document.getElementById('easter-egg-toast');
+                if (!logo || !toast) return;
+                const messages = [
+                    '✦ ai găsit secretul — bine ai venit în cerc ✦',
+                    '✦ cafeaua e rece, dar secretul e cald ✦',
+                    '✦ ești curios. îți place de tine ✦',
+                ];
+                let clicks = 0, timer = null, msgIdx = 0;
+                logo.addEventListener('click', e => {
+                    e.preventDefault();
+                    clicks++;
+                    clearTimeout(timer);
+                    timer = setTimeout(() => { clicks = 0; }, 800);
+                    if (clicks >= 3) {
+                        clicks = 0;
+                        toast.textContent = messages[msgIdx % messages.length];
+                        msgIdx++;
+                        toast.classList.add('show');
+                        setTimeout(() => toast.classList.remove('show'), 3000);
+                    }
+                });
+            })();
+
+            /* ============================
+               6. SCROLL PROGRESS BAR
+            ============================ */
+            (function() {
+                const bar = document.getElementById('scroll-progress');
+                if (!bar) return;
+                window.addEventListener('scroll', () => {
+                    const doc = document.documentElement;
+                    const pct = (doc.scrollTop || document.body.scrollTop) / (doc.scrollHeight - doc.clientHeight) * 100;
+                    bar.style.width = pct + '%';
+                }, { passive: true });
+            })();
+
+
+            /* TOUCH TRAIL (mobil) */
+            (function() {
+                if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+                document.addEventListener('touchmove', e => {
+                    const t = e.touches[0];
+                    const el = document.createElement('div');
+                    el.className = 'touch-particle';
+                    el.style.left = t.clientX + 'px';
+                    el.style.top  = t.clientY + 'px';
+                    document.body.appendChild(el);
+                    setTimeout(() => el.remove(), 600);
+                }, { passive: true });
+            })();
 
             /* OPEN NOW INDICATOR */
             (function() {
@@ -2977,14 +3155,6 @@
             }
             tryNextImage();
 
-            /* BACK TO TOP */
-            const backToTopBtn = document.getElementById('back-to-top');
-            window.addEventListener('scroll', () => {
-                backToTopBtn.classList.toggle('visible', window.scrollY > 400);
-            }, { passive: true });
-            backToTopBtn.addEventListener('click', () => {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
         });
     </script>
 
