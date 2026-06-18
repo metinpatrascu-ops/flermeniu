@@ -11,17 +11,9 @@
     <meta property="og:type" content="restaurant">
     <meta name="theme-color" content="#3B1F0F">
     <title>flērcafē — Art, Coffee & Spirits | București</title>
-
-    <!-- Preconnect pentru încărcare mai rapidă a fonturilor și iconițelor -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
-
         :root {
             --gold: #B35D2D; 
             --brand-brown: #6B320E; 
@@ -43,8 +35,6 @@
              overflow-x: hidden;
              scroll-behavior: smooth;
         }
-
-        /* Fundal fix optimizat - separat de scroll pentru performanță pe mobil */
         body::before {
             content: "";
             position: fixed;
@@ -52,15 +42,12 @@
             z-index: -1;
             background-image: radial-gradient(circle at top left, rgba(255, 238, 216, 0.08), transparent 24%),
                                radial-gradient(circle at bottom right, rgba(255, 157, 60, 0.08), transparent 20%);
-            background-size: cover;
-            background-position: center;
             will-change: transform;
             pointer-events: none;
         }
 
         /* WATERMARK BACKGROUND */
         .bg-watermark {
-            will-change: transform;
             position: fixed;
             top: 50%;
             left: 50%;
@@ -97,7 +84,6 @@
             padding: 16px 0;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
             margin-bottom: 40px;
-            will-change: transform;
         }
 
         .menu-tabs {
@@ -124,7 +110,7 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            transition: color 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), background-color 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), border-color 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             border-radius: 6px;
         }
 
@@ -363,7 +349,7 @@
             opacity: 0;
             visibility: hidden;
             transform: translateY(10px);
-            transition: opacity 0.3s cubic-bezier(0.165, 0.84, 0.44, 1), visibility 0.3s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+            transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
             pointer-events: none;
             text-align: center;
@@ -550,7 +536,6 @@
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(179, 93, 45, 0.25);
             padding: 10px 0;
-            will-change: transform;
         }
 
         .top-bar-inner {
@@ -615,7 +600,7 @@
             color: var(--text-dim);
             font-size: 13px;
             text-decoration: none;
-            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .top-bar-socials a:hover {
@@ -632,26 +617,9 @@
         @media (max-width: 768px) {
             .top-bar-info { display: none; }
             .top-bar-inner { justify-content: space-between; }
-            /* Rândul secundar cu open indicator pe mobil */
-            .top-bar-mobile-status {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                padding: 5px 0 8px;
-                border-top: 1px solid rgba(179, 93, 45, 0.12);
-                gap: 6px;
-                font-size: 11px;
-                font-weight: 600;
-            }
-            body { padding-top: 76px; }
-            .menu-tabs-wrapper { top: 76px; }
+            body { padding-top: 49px; }
+            .menu-tabs-wrapper { top: 49px; }
         }
-
-        @media (min-width: 769px) {
-            .top-bar-mobile-status { display: none; }
-        }
-
-
 
         /* ===== FOOTER ===== */
         .site-footer {
@@ -734,7 +702,7 @@
             color: var(--text-dim);
             font-size: 14px;
             text-decoration: none;
-            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+            transition: all 0.3s ease;
             margin-bottom: 0;
         }
 
@@ -798,496 +766,230 @@
             .footer-divider { flex-direction: column; text-align: center; }
         }
 
+        /* ===== TOP INFO BAR ===== */
+        .top-bar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 200;
+            background: rgba(30, 14, 5, 0.97);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(179, 93, 45, 0.25);
+            padding: 10px 0;
+            will-change: transform;
+        }
+        .top-bar-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        .top-bar-brand {
+            font-family: var(--font-accent);
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 1px;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .top-bar-info {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            flex-wrap: wrap;
+        }
+        .top-bar-item {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 12px;
+            color: var(--text-dim);
+            white-space: nowrap;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .top-bar-item:hover { color: var(--gold); }
+        .top-bar-item i { color: var(--gold); font-size: 13px; }
+        .top-bar-socials { display: flex; align-items: center; gap: 12px; }
+        .top-bar-socials a {
+            width: 30px; height: 30px;
+            display: flex; align-items: center; justify-content: center;
+            border: 1px solid rgba(179, 93, 45, 0.3);
+            border-radius: 50%;
+            color: var(--text-dim);
+            font-size: 13px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+        .top-bar-socials a:hover { background: var(--gold); color: var(--brand-brown-dark); border-color: var(--gold); }
+
+        /* OPEN INDICATOR */
+        .open-indicator { display: inline-flex; align-items: center; gap: 5px; }
+        .open-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+        .open-dot.open { background: #4ade80; box-shadow: 0 0 0 0 rgba(74,222,128,0.6); animation: pulse-green 2s infinite; }
+        .open-dot.closed { background: #f87171; }
+        @keyframes pulse-green {
+            0%   { box-shadow: 0 0 0 0 rgba(74,222,128,0.6); }
+            70%  { box-shadow: 0 0 0 6px rgba(74,222,128,0); }
+            100% { box-shadow: 0 0 0 0 rgba(74,222,128,0); }
+        }
+
+        /* MOBILE STATUS ROW */
+        @media (max-width: 768px) {
+            .top-bar-info { display: none; }
+            .top-bar-inner { justify-content: space-between; }
+            .top-bar-mobile-status {
+                display: flex; align-items: center; justify-content: center;
+                padding: 5px 0 8px;
+                border-top: 1px solid rgba(179, 93, 45, 0.12);
+                gap: 6px; font-size: 11px; font-weight: 600;
+            }
+            body { padding-top: 76px; }
+            .menu-tabs-wrapper { top: 76px; }
+        }
+        @media (min-width: 769px) {
+            .top-bar-mobile-status { display: none; }
+            body { padding-top: 53px; }
+            .menu-tabs-wrapper { top: 53px; }
+        }
+
+        /* ===== FOOTER ===== */
+        .site-footer {
+            position: relative; z-index: 10; margin-top: 20px;
+            background: rgba(0,0,0,0.35);
+            border-top: 1.5px solid rgba(179,93,45,0.25);
+        }
+        .footer-main {
+            max-width: 1200px; margin: 0 auto;
+            padding: 60px 5% 40px;
+            display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 50px;
+        }
+        .footer-col h4 {
+            font-family: var(--font-main); font-size: 10px; font-weight: 800;
+            letter-spacing: 2.5px; text-transform: uppercase;
+            color: var(--gold); margin-bottom: 18px;
+        }
+        .footer-col p { font-size: 13px; color: var(--text-dim); line-height: 1.8; }
+        .footer-col a {
+            display: flex; align-items: center; gap: 9px;
+            font-size: 13px; color: var(--text-dim); text-decoration: none;
+            margin-bottom: 10px;
+            transition: color 0.3s ease;
+        }
+        .footer-col a i { color: var(--gold); font-size: 13px; width: 14px; }
+        .footer-col a:hover { color: var(--gold); }
+        .footer-brand { font-family: var(--font-accent); font-size: 26px; font-weight: 700; color: var(--gold); margin-bottom: 12px; }
+        .footer-tagline { font-family: var(--font-accent); font-style: italic; font-size: 14px; color: var(--text-dim); margin-bottom: 20px; }
+        .footer-social { display: flex; gap: 10px; margin-top: 8px; }
+        .footer-social a {
+            width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+            border: 1px solid rgba(179,93,45,0.3); border-radius: 50%;
+            color: var(--text-dim); font-size: 14px; text-decoration: none; margin-bottom: 0;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+        .footer-social a:hover { background: var(--gold); color: var(--brand-brown-dark); border-color: var(--gold); }
+        .footer-divider {
+            border-top: 1px solid rgba(179,93,45,0.15);
+            max-width: 1200px; margin: 0 auto; padding: 22px 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 11px; color: rgba(212,192,169,0.5); flex-wrap: wrap; gap: 10px;
+        }
+        @media (max-width: 900px) { .footer-main { grid-template-columns: 1fr 1fr; gap: 40px; } }
+        @media (max-width: 520px) { .footer-main { grid-template-columns: 1fr; gap: 32px; } .footer-divider { flex-direction: column; text-align: center; } }
+
         /* ===== WELCOME POPUP ===== */
         .welcome-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: 2000;
-            background: rgba(20, 10, 4, 0.72);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            opacity: 0;
-            visibility: hidden;
+            position: fixed; inset: 0; z-index: 2000;
+            background: rgba(20,10,4,0.72);
+            backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+            display: flex; align-items: center; justify-content: center;
+            padding: 20px; opacity: 0; visibility: hidden;
             transition: opacity 0.4s ease, visibility 0.4s ease;
         }
-
-        .welcome-overlay.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-
+        .welcome-overlay.visible { opacity: 1; visibility: visible; }
         .welcome-modal {
-            position: relative;
-            max-width: 420px;
-            width: 100%;
-            background: linear-gradient(160deg, rgba(70, 38, 18, 0.97), rgba(40, 20, 9, 0.98));
-            border: 1px solid rgba(179, 93, 45, 0.35);
-            border-radius: 16px;
-            padding: 38px 32px 30px;
-            text-align: center;
+            position: relative; max-width: 420px; width: 100%;
+            background: linear-gradient(160deg, rgba(70,38,18,0.97), rgba(40,20,9,0.98));
+            border: 1px solid rgba(179,93,45,0.35); border-radius: 16px;
+            padding: 38px 32px 30px; text-align: center;
             box-shadow: 0 25px 70px rgba(0,0,0,0.5);
             transform: translateY(24px) scale(0.97);
-            transition: transform 0.45s cubic-bezier(0.165, 0.84, 0.44, 1);
+            transition: transform 0.45s cubic-bezier(0.165,0.84,0.44,1);
         }
-
-        .welcome-overlay.visible .welcome-modal {
-            transform: translateY(0) scale(1);
-        }
-
+        .welcome-overlay.visible .welcome-modal { transform: translateY(0) scale(1); }
         .welcome-close {
-            position: absolute;
-            top: 14px;
-            right: 14px;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            border: 1px solid rgba(179, 93, 45, 0.3);
-            background: transparent;
-            color: var(--text-dim);
-            font-size: 14px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            position: absolute; top: 14px; right: 14px;
+            width: 30px; height: 30px; border-radius: 50%;
+            border: 1px solid rgba(179,93,45,0.3); background: transparent;
+            color: var(--text-dim); font-size: 14px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
             transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
         }
-
-        .welcome-close:hover {
-            background: var(--gold);
-            color: var(--brand-brown-dark);
-            border-color: var(--gold);
-        }
-
+        .welcome-close:hover { background: var(--gold); color: var(--brand-brown-dark); border-color: var(--gold); }
         .welcome-lang-toggle {
-            position: absolute;
-            top: 14px;
-            left: 14px;
-            min-width: 30px;
-            height: 30px;
-            padding: 0 8px;
-            border-radius: 15px;
-            border: 1px solid rgba(179, 93, 45, 0.3);
-            background: transparent;
-            color: var(--text-dim);
-            font-family: var(--font-main);
-            font-size: 11px;
-            font-weight: 800;
-            letter-spacing: 1px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            position: absolute; top: 14px; left: 14px;
+            min-width: 30px; height: 30px; padding: 0 8px; border-radius: 15px;
+            border: 1px solid rgba(179,93,45,0.3); background: transparent;
+            color: var(--text-dim); font-family: var(--font-main);
+            font-size: 11px; font-weight: 800; letter-spacing: 1px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
             transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
         }
-
-        .welcome-lang-toggle:hover {
-            background: var(--gold);
-            color: var(--brand-brown-dark);
-            border-color: var(--gold);
-        }
-
-        .welcome-brand {
-            font-family: var(--font-accent);
-            font-size: 26px;
-            font-weight: 700;
-            color: var(--gold);
-            margin-bottom: 6px;
-        }
-
-        .welcome-icon {
-            font-size: 30px;
-            color: var(--gold);
-            margin-bottom: 14px;
-        }
-
-        .welcome-title {
-            font-family: var(--font-accent);
-            font-style: italic;
-            font-size: 19px;
-            color: var(--text-main);
-            line-height: 1.5;
-            margin-bottom: 14px;
-        }
-
-        .welcome-text {
-            font-size: 13px;
-            color: var(--text-dim);
-            line-height: 1.8;
-            margin-bottom: 26px;
-        }
-
-        .welcome-actions {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
+        .welcome-lang-toggle:hover { background: var(--gold); color: var(--brand-brown-dark); border-color: var(--gold); }
+        .welcome-brand { font-family: var(--font-accent); font-size: 26px; font-weight: 700; color: var(--gold); margin-bottom: 6px; }
+        .welcome-icon { font-size: 30px; color: var(--gold); margin-bottom: 14px; }
+        .welcome-title { font-family: var(--font-accent); font-style: italic; font-size: 19px; color: var(--text-main); line-height: 1.5; margin-bottom: 14px; }
+        .welcome-text { font-size: 13px; color: var(--text-dim); line-height: 1.8; margin-bottom: 26px; }
+        .welcome-actions { display: flex; flex-direction: column; gap: 10px; }
         .welcome-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 13px 20px;
-            border-radius: 8px;
-            font-family: var(--font-main);
-            font-size: 13px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            text-decoration: none;
-            cursor: pointer;
-            border: none;
-            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+            padding: 13px 20px; border-radius: 8px; font-family: var(--font-main);
+            font-size: 13px; font-weight: 700; letter-spacing: 0.5px;
+            text-decoration: none; cursor: pointer; border: none;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
         }
+        .welcome-btn-primary { background: var(--gold); color: var(--brand-brown-dark); }
+        .welcome-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(179,93,45,0.35); }
+        .welcome-btn-secondary { background: transparent; color: var(--text-dim); border: 1px solid rgba(179,93,45,0.3); }
+        .welcome-btn-secondary:hover { color: var(--text-main); border-color: var(--gold); }
+        @media (max-width: 480px) { .welcome-modal { padding: 32px 22px 24px; } .welcome-title { font-size: 17px; } }
 
-        .welcome-btn-primary {
-            background: var(--gold);
-            color: var(--brand-brown-dark);
+        /* ===== BACK TO TOP ===== */
+        .back-to-top {
+            position: fixed; bottom: 28px; right: 24px; z-index: 150;
+            width: 42px; height: 42px; background: var(--gold); border: none;
+            border-radius: 50%; color: var(--brand-brown-dark); font-size: 17px;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.35s ease, transform 0.35s ease;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.4);
         }
+        .back-to-top.visible { opacity: 1; pointer-events: all; }
+        .back-to-top:hover { transform: translateY(-3px); }
 
-        .welcome-btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(179, 93, 45, 0.35);
-        }
-
-        .welcome-btn-secondary {
-            background: transparent;
-            color: var(--text-dim);
-            border: 1px solid rgba(179, 93, 45, 0.3);
-        }
-
-        .welcome-btn-secondary:hover {
-            color: var(--text-main);
-            border-color: var(--gold);
-        }
-
-        @media (max-width: 480px) {
-            .welcome-modal { padding: 32px 22px 24px; }
-            .welcome-title { font-size: 17px; }
-        }
-
-        /* cursor: original browser cursor păstrat */
-
-        /* ===== 2. OPEN NOW INDICATOR ===== */
-        .open-indicator {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .open-dot {
-            width: 7px; height: 7px;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
-
-        .open-dot.open {
-            background: #4ade80;
-            box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.6);
-            animation: pulse-green 2s infinite;
-        }
-
-        .open-dot.closed {
-            background: #f87171;
-        }
-
-        @keyframes pulse-green {
-            0%   { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.6); }
-            70%  { box-shadow: 0 0 0 6px rgba(74, 222, 128, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
-        }
-
-        /* ===== 3. TIME-BASED RECOMMENDATION ===== */
-        .time-recommendation {
-            position: fixed;
-            bottom: 80px;
-            left: 24px;
-            z-index: 150;
-            max-width: 230px;
-            background: rgba(30, 14, 5, 0.92);
-            border: 1px solid rgba(179, 93, 45, 0.3);
-            border-radius: 12px;
-            padding: 12px 16px;
-            font-size: 12px;
-            color: var(--text-dim);
-            line-height: 1.5;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            opacity: 0;
-            transform: translateY(10px);
-            transition: opacity 0.4s ease, transform 0.4s ease;
-            pointer-events: none;
-        }
-
-        .time-recommendation.visible {
-            opacity: 1;
-            transform: translateY(0);
-            pointer-events: all;
-        }
-
-        .time-recommendation strong {
-            display: block;
-            color: var(--gold);
-            font-size: 11px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-bottom: 4px;
-        }
-
-        .time-rec-close {
-            position: absolute;
-            top: 6px; right: 8px;
-            background: none;
-            border: none;
-            color: rgba(212, 192, 169, 0.4);
-            cursor: pointer;
-            font-size: 11px;
-            padding: 2px;
-            line-height: 1;
-        }
-
-        .time-rec-close:hover { color: var(--gold); }
-
-        @media (max-width: 600px) {
-            .time-recommendation { left: 16px; bottom: 90px; max-width: 200px; }
-        }
-
-        /* ===== 4. SCROLL PROGRESS BAR ===== */
-        .scroll-progress {
-            position: fixed;
-            top: 0; left: 0;
-            height: 2px;
-            width: 0%;
-            background: linear-gradient(90deg, var(--gold), rgba(179, 93, 45, 0.4));
-            z-index: 1000;
-            transition: width 0.05s linear;
-            pointer-events: none;
-        }
-
-        /* ===== 5. EASTER EGG ===== */
-        .easter-egg-toast {
-            position: fixed;
-            bottom: 28px;
-            left: 50%;
-            transform: translateX(-50%) translateY(20px);
-            background: rgba(30, 14, 5, 0.96);
-            border: 1px solid rgba(179, 93, 45, 0.4);
-            border-radius: 24px;
-            padding: 12px 24px;
-            font-family: var(--font-accent);
-            font-style: italic;
-            font-size: 14px;
-            color: var(--text-dim);
-            white-space: nowrap;
-            z-index: 5000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.4s ease, transform 0.4s ease;
-            backdrop-filter: blur(12px);
-        }
-
-        .easter-egg-toast.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
-
-
-
-
-        /* ===== TAB CINEMATIC TRANSITION ===== */
-        @keyframes layerExit {
-            from { opacity: 1; filter: blur(0px); transform: translateY(0); }
-            to   { opacity: 0; filter: blur(6px);  transform: translateY(-14px); }
-        }
-        .tab-content.exiting {
-            display: block !important;
-            animation: layerExit 0.28s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
-            pointer-events: none;
-        }
-
-        /* ===== CURSOR TRAIL ===== */
-        .cursor-trail {
-            position: fixed;
-            width: 6px; height: 6px;
-            background: var(--gold);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9997;
-            transform: translate(-50%, -50%);
-            transition: opacity 0.4s ease;
-            mix-blend-mode: screen;
-        }
-
-        /* ===== SPOTIFY WIDGET ===== */
-        .spotify-widget {
-            position: fixed;
-            bottom: 28px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 149;
-            background: rgba(18, 8, 3, 0.88);
-            border: 1px solid rgba(179, 93, 45, 0.25);
-            border-radius: 50px;
-            padding: 9px 16px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 12px;
-            color: var(--text-dim);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            white-space: nowrap;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.4s ease, transform 0.4s ease;
-        }
-        .spotify-widget.visible {
-            opacity: 1;
-            pointer-events: all;
-        }
-        .spotify-bars {
-            display: flex;
-            align-items: flex-end;
-            gap: 2px;
-            height: 14px;
-        }
-        .spotify-bars span {
-            display: block;
-            width: 3px;
-            background: var(--gold);
-            border-radius: 2px;
-            animation: bars 1.2s ease-in-out infinite;
-        }
-        .spotify-bars span:nth-child(1) { height: 6px;  animation-delay: 0s; }
-        .spotify-bars span:nth-child(2) { height: 12px; animation-delay: 0.2s; }
-        .spotify-bars span:nth-child(3) { height: 8px;  animation-delay: 0.4s; }
-        .spotify-bars span:nth-child(4) { height: 14px; animation-delay: 0.1s; }
-        .spotify-bars span:nth-child(5) { height: 5px;  animation-delay: 0.3s; }
-        @keyframes bars {
-            0%, 100% { transform: scaleY(0.4); }
-            50%       { transform: scaleY(1); }
-        }
-        .spotify-label { font-style: italic; color: var(--text-dim); }
-        .spotify-label em { color: var(--gold); font-style: normal; }
-
-        /* ===== TONIGHT'S PICK / COUNTDOWN inside time-rec ===== */
-        .time-pick-badge {
-            display: inline-block;
-            background: var(--gold);
-            color: var(--brand-brown-dark);
-            font-size: 9px;
-            font-weight: 900;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            padding: 2px 7px;
-            border-radius: 4px;
-            margin-bottom: 5px;
-        }
-
-        .countdown-display {
-            font-size: 20px;
-            font-weight: 800;
-            color: var(--gold);
-            letter-spacing: 1px;
-            margin: 4px 0 2px;
-            font-variant-numeric: tabular-nums;
-        }
-
-        /* ===== TIME THEME ===== */
-        body.theme-morning {
-            --gold: #C4702A;
-            --brand-brown: #7A3A10;
-        }
-        body.theme-evening {
-            --gold: #9E5535;
-            --brand-brown: #4A2008;
-            --brand-brown-dark: #2A1008;
-        }
-
-        @media (max-width: 600px) {
-            .spotify-widget { font-size: 11px; padding: 8px 14px; }
-        }
+        /* ===== PARALLAX ===== */
+        .bg-watermark { will-change: transform; }
 
     </style>
 </head>
 <body>
 
-
-
-    <!-- SPOTIFY WIDGET -->
-    <div class="spotify-widget" id="spotify-widget">
-        <div class="spotify-bars">
-            <span></span><span></span><span></span><span></span><span></span>
-        </div>
-        <span class="spotify-label">acum la flēr · <em id="spotify-track">flērcafē vibes</em></span>
-    </div>
-
-    <div class="cursor-trail" id="trail-0" style="opacity:0.7;width:6px;height:6px;"></div>
-    <div class="cursor-trail" id="trail-1" style="opacity:0.6;width:5px;height:5px;"></div>
-    <div class="cursor-trail" id="trail-2" style="opacity:0.5;width:4px;height:4px;"></div>
-    <div class="cursor-trail" id="trail-3" style="opacity:0.4;width:3px;height:3px;"></div>
-    <div class="cursor-trail" id="trail-4" style="opacity:0.3;width:2px;height:2px;"></div>
-    <div class="cursor-trail" id="trail-5" style="opacity:0.2;width:1px;height:1px;"></div>
-    <!-- SCROLL PROGRESS -->
-    <div class="scroll-progress" id="scroll-progress"></div>
-
-    <!-- EASTER EGG TOAST -->
-    <div class="easter-egg-toast" id="easter-egg-toast">✦ ai găsit secretul — bine ai venit în cerc ✦</div>
-
-    <!-- TIME RECOMMENDATION -->
-    <div class="time-recommendation" id="time-recommendation">
-        <button class="time-rec-close" id="time-rec-close">✕</button>
-        <strong id="time-rec-label">acum la flēr</strong>
-        <span id="time-rec-text"></span>
-    </div>
-
-    <!-- WELCOME POPUP -->
-    <div class="welcome-overlay" id="welcome-overlay">
-        <div class="welcome-modal">
-            <button class="welcome-close" id="welcome-close" aria-label="Închide">
-                <i class="fas fa-times"></i>
-            </button>
-            <button class="welcome-lang-toggle" id="welcome-lang-toggle" type="button">EN</button>
-            <div class="welcome-icon"><i class="fas fa-mug-hot"></i></div>
-            <div class="welcome-brand">flērcafē</div>
-            <p class="welcome-title" id="welcome-title" data-ro="Meniul nostru e gândit ca o poveste, capitol cu capitol." data-en="Our menu is crafted like a story, chapter by chapter.">Meniul nostru e gândit ca o poveste, capitol cu capitol.</p>
-            <p class="welcome-text" id="welcome-text"
-               data-ro="De la <em>Openings</em> și <em>Daily Ritual</em>, prin <em>Compositions</em> și <em>Centerpiece</em>, până la <em>Finale</em> — fiecare secțiune e un pas într-o călătorie gândită cu grijă. Sperăm ca experiența ta la flērcafē să fi fost propriul tău capitol memorabil, iar dacă a fost, ne-ar însemna mult să-l spui și altora printr-o recenzie. 🤍"
-               data-en="From <em>Openings</em> and <em>Daily Ritual</em>, through <em>Compositions</em> and <em>Centerpiece</em>, all the way to <em>Finale</em> — every section is a step in a carefully crafted journey. We hope your time at flērcafē was a memorable chapter of its own, and if it was, it would mean a lot if you shared it with others through a review. 🤍">
-                De la <em>Openings</em> și <em>Daily Ritual</em>, prin <em>Compositions</em> și <em>Centerpiece</em>,
-                până la <em>Finale</em> — fiecare secțiune e un pas într-o călătorie gândită cu grijă.
-                Sperăm ca experiența ta la flērcafē să fi fost propriul tău capitol memorabil,
-                iar dacă a fost, ne-ar însemna mult să-l spui și altora printr-o recenzie. 🤍
-            </p>
-            <div class="welcome-actions">
-                <a href="https://search.google.com/local/writereview?placeid=ChIJ3dfcCJkDs0ARUOwAjSCSRGo" target="_blank" class="welcome-btn welcome-btn-primary" id="welcome-review-btn" data-ro="Lasă o recenzie ⭐" data-en="Leave a review ⭐">
-                    <i class="fab fa-google"></i>
-                    <span>Lasă o recenzie ⭐</span>
-                </a>
-                <button class="welcome-btn welcome-btn-secondary" id="welcome-continue" data-ro="Continuă spre meniu" data-en="Continue to menu">
-                    Continuă spre meniu
-                </button>
-            </div>
-        </div>
-    </div>
-
     <!-- TOP INFO BAR -->
     <header class="top-bar">
         <div class="top-bar-inner">
-            <a href="https://flercafe.ro" class="top-bar-brand" id="brand-logo">flērcafē</a>
+            <a href="https://flercafe.ro" class="top-bar-brand">flērcafē</a>
             <div class="top-bar-info">
                 <a href="https://maps.google.com/?q=Bulevardul+Primaverii+15+Bucuresti" target="_blank" class="top-bar-item">
                     <i class="fas fa-map-marker-alt"></i>
                     Bulevardul Primăverii 15, MARe · București
                 </a>
                 <span class="top-bar-item">
-                    <span class="open-indicator">
-                        <span class="open-dot" id="open-dot"></span>
-                        <span id="open-label">09:00 - 19:00</span>
-                    </span>
+                    <i class="far fa-clock"></i>
+                    All Day
                 </span>
                 <a href="mailto:contact@flercafe.ro" class="top-bar-item">
                     <i class="far fa-envelope"></i>
@@ -1295,14 +997,15 @@
                 </a>
             </div>
             <div class="top-bar-socials">
-                <a href="https://www.instagram.com/fler__cafe/" target="_blank" title="Instagram">
+                <a href="https://instagram.com/flercafe" target="_blank" title="Instagram">
                     <i class="fab fa-instagram"></i>
                 </a>
-            </div>
-            <!-- STATUS ROW MOBIL -->
-            <div class="top-bar-mobile-status">
-                <span class="open-dot" id="open-dot-mobile"></span>
-                <span id="open-label-mobile" style="color: var(--text-dim);">09:00 - 19:00</span>
+                <a href="https://facebook.com/flercafe" target="_blank" title="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://tiktok.com/@flercafe" target="_blank" title="TikTok">
+                    <i class="fab fa-tiktok"></i>
+                </a>
             </div>
         </div>
     </header>
@@ -2961,7 +2664,9 @@
                 <p class="footer-tagline">Art, Coffee & Spirits</p>
                 <p>O pauză deliberată în mijlocul culturii moderne, unde cafeaua de specialitate întâlnește arta contemporană.</p>
                 <div class="footer-social">
-                    <a href="https://www.instagram.com/fler__cafe/" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://instagram.com/flercafe" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://facebook.com/flercafe" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://tiktok.com/@flercafe" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
                 </div>
             </div>
             <div class="footer-col">
@@ -2981,8 +2686,8 @@
             </div>
             <div class="footer-col">
                 <h4>Program</h4>
-                <p style="margin-bottom: 8px;"><span style="color: var(--gold); font-weight: 600;">09:00 - 19:00</span></p>
-                <p>Zilnic, de la prima cafea până la ultimul cocktail.</p>
+                <p style="margin-bottom: 8px;"><span style="color: var(--gold); font-weight: 600;">All Day</span></p>
+                <p>Meniu disponibil toată ziua, de la prima cafea până la ultimul cocktail.</p>
             </div>
             <div class="footer-col">
                 <h4>Contact</h4>
@@ -2994,9 +2699,49 @@
                     <i class="fas fa-globe"></i>
                     flercafe.ro
                 </a>
-                <a href="https://search.google.com/local/writereview?placeid=ChIJ3dfcCJkDs0ARUOwAjSCSRGo" target="_blank" style="color: var(--gold); font-weight: 700;">
-                    <i class="fab fa-google"></i>
-                    Lasă o recenzie ⭐
+            </div>
+        </div>
+        <div class="footer-divider">
+            <span>© 2026 flērcafē · All rights reserved</span>
+            <span>Bulevardul Primăverii 15 · MARe · București</span>
+        </div>
+    </footer>
+
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="footer-main">
+            <div class="footer-col">
+                <div class="footer-brand">flērcafē</div>
+                <p class="footer-tagline">Art, Coffee & Spirits</p>
+                <p>O pauză deliberată în mijlocul culturii moderne, unde cafeaua de specialitate întâlnește arta contemporană.</p>
+                <div class="footer-social">
+                    <a href="https://www.instagram.com/fler__cafe/" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Locație</h4>
+                <a href="https://maps.google.com/?q=Bulevardul+Primaverii+15+Bucuresti" target="_blank">
+                    <i class="fas fa-map-marker-alt"></i>Bulevardul Primăverii 15
+                </a>
+                <a href="https://maps.google.com/?q=Bulevardul+Primaverii+15+Bucuresti" target="_blank">
+                    <i class="fas fa-building"></i>MARe, București
+                </a>
+                <a href="https://maps.google.com/?q=Bulevardul+Primaverii+15+Bucuresti" target="_blank">
+                    <i class="fas fa-directions"></i>Deschide în Maps
+                </a>
+            </div>
+            <div class="footer-col">
+                <h4>Program</h4>
+                <p style="margin-bottom:8px;"><span style="color:var(--gold);font-weight:600;">09:00 - 19:00</span></p>
+                <p>Zilnic, de la prima cafea până la ultimul cocktail.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <a href="mailto:contact@flercafe.ro"><i class="far fa-envelope"></i>contact@flercafe.ro</a>
+                <a href="https://flercafe.ro" target="_blank"><i class="fas fa-globe"></i>flercafe.ro</a>
+                <a href="https://search.google.com/local/writereview?placeid=ChIJ3dfcCJkDs0ARUOwAjSCSRGo" target="_blank" style="color:var(--gold);font-weight:700;">
+                    <i class="fab fa-google"></i>Lasă o recenzie ⭐
                 </a>
             </div>
         </div>
@@ -3008,6 +2753,80 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
+
+            /* OPEN NOW INDICATOR */
+            (function() {
+                const dot = document.getElementById('open-dot');
+                const label = document.getElementById('open-label');
+                const dotM = document.getElementById('open-dot-mobile');
+                const labelM = document.getElementById('open-label-mobile');
+                if (!dot) return;
+                const now = new Date();
+                const mins = now.getHours() * 60 + now.getMinutes();
+                const isOpen = mins >= 540 && mins < 1140;
+                const color = isOpen ? '#4ade80' : '#f87171';
+                const txt = isOpen ? 'Deschis · 09:00 - 19:00' : 'Închis · deschidem la 09:00';
+                [dot, dotM].forEach(d => { if(d) d.classList.add(isOpen ? 'open' : 'closed'); });
+                [label, labelM].forEach(l => { if(l) { l.textContent = txt; l.style.color = color; } });
+            })();
+
+            /* BACK TO TOP */
+            const backToTopBtn = document.getElementById('back-to-top');
+            if (backToTopBtn) {
+                window.addEventListener('scroll', () => {
+                    backToTopBtn.classList.toggle('visible', window.scrollY > 400);
+                }, { passive: true });
+                backToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+            }
+
+            /* WELCOME POPUP */
+            const welcomeOverlay  = document.getElementById('welcome-overlay');
+            const welcomeClose    = document.getElementById('welcome-close');
+            const welcomeContinue = document.getElementById('welcome-continue');
+            if (welcomeOverlay) {
+                function closeWelcome() {
+                    welcomeOverlay.classList.remove('visible');
+                    document.body.style.overflow = '';
+                }
+                setTimeout(() => {
+                    welcomeOverlay.classList.add('visible');
+                    document.body.style.overflow = 'hidden';
+                }, 600);
+                welcomeClose.addEventListener('click', closeWelcome);
+                welcomeContinue.addEventListener('click', closeWelcome);
+                welcomeOverlay.addEventListener('click', e => { if (e.target === welcomeOverlay) closeWelcome(); });
+
+                /* LANGUAGE TOGGLE RO/EN */
+                const langToggle   = document.getElementById('welcome-lang-toggle');
+                const welcomeTitle = document.getElementById('welcome-title');
+                const welcomeText  = document.getElementById('welcome-text');
+                const reviewBtn    = document.getElementById('welcome-review-btn');
+                let currentLang = 'ro';
+                langToggle.addEventListener('click', () => {
+                    currentLang = currentLang === 'ro' ? 'en' : 'ro';
+                    langToggle.textContent = currentLang === 'ro' ? 'EN' : 'RO';
+                    welcomeTitle.textContent = welcomeTitle.getAttribute('data-' + currentLang);
+                    welcomeText.innerHTML   = welcomeText.getAttribute('data-' + currentLang);
+                    reviewBtn.querySelector('span').textContent = reviewBtn.getAttribute('data-' + currentLang);
+                    welcomeContinue.textContent = welcomeContinue.getAttribute('data-' + currentLang);
+                });
+            }
+
+            /* PARALLAX WATERMARK — rAF smooth pe toate dispozitivele */
+            (function() {
+                const watermark = document.querySelector('.bg-watermark');
+                if (!watermark) return;
+                if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+                let currentY = 0;
+                function tick() {
+                    const targetY = window.scrollY * 0.18;
+                    currentY += (targetY - currentY) * 0.08;
+                    watermark.style.transform = 'translate3d(-50%, calc(-50% + ' + currentY.toFixed(2) + 'px), 0)';
+                    requestAnimationFrame(tick);
+                }
+                tick();
+            })();
+
             const sections = document.querySelectorAll('.menu-section');
             const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
             
@@ -3100,10 +2919,22 @@
             const tabButtons = document.querySelectorAll('.tab-btn');
             const tabContents = document.querySelectorAll('.tab-content');
 
-            // Tab switching handled by cinematic transition below (section H)
-            // Păstrăm scroll behavior
             tabButtons.forEach(btn => {
                 btn.addEventListener('click', () => {
+                    const tabId = btn.getAttribute('data-tab');
+                    
+                    tabButtons.forEach(b => b.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    
+                    btn.classList.add('active');
+                    const activeTabContent = document.getElementById(`${tabId}-tab`);
+                    activeTabContent.classList.add('active');
+                    
+                    // Reveal immediately all items on active layer
+                    const activeSections = activeTabContent.querySelectorAll('.menu-section');
+                    activeSections.forEach(s => s.classList.add('is-visible'));
+                    
+                    // Smooth scroll past intro if needed
                     const tabWrapper = document.querySelector('.menu-tabs-wrapper');
                     const rect = tabWrapper.getBoundingClientRect();
                     if (rect.top < 0) {
@@ -3153,450 +2984,6 @@
             }, { passive: true });
             backToTopBtn.addEventListener('click', () => {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-
-            /* WELCOME POPUP */
-            const welcomeOverlay = document.getElementById('welcome-overlay');
-            const welcomeClose = document.getElementById('welcome-close');
-            const welcomeContinue = document.getElementById('welcome-continue');
-
-            function closeWelcome() {
-                welcomeOverlay.classList.remove('visible');
-                document.body.style.overflow = '';
-            }
-
-            setTimeout(() => {
-                welcomeOverlay.classList.add('visible');
-                document.body.style.overflow = 'hidden';
-            }, 600);
-
-            welcomeClose.addEventListener('click', closeWelcome);
-            welcomeContinue.addEventListener('click', closeWelcome);
-            welcomeOverlay.addEventListener('click', (e) => {
-                if (e.target === welcomeOverlay) closeWelcome();
-            });
-
-
-            /* cursor: original browser cursor păstrat */
-
-            /* ============================
-               2. OPEN NOW INDICATOR — live countdown
-            ============================ */
-            (function() {
-                const dot         = document.getElementById('open-dot');
-                const label       = document.getElementById('open-label');
-                const dotMobile   = document.getElementById('open-dot-mobile');
-                const labelMobile = document.getElementById('open-label-mobile');
-                if (!dot || !label) return;
-
-                function pad(n) { return String(n).padStart(2, '0'); }
-
-                function update() {
-                    const now  = new Date();
-                    const mins = now.getHours() * 60 + now.getMinutes();
-                    const isOpen = mins >= 540 && mins < 1140;
-                    let txt, color;
-
-                    if (isOpen) {
-                        const closeDate = new Date();
-                        closeDate.setHours(19, 0, 0, 0);
-                        const diff = closeDate - now;
-                        const hh = Math.floor(diff / 3600000);
-                        const mm = Math.floor((diff % 3600000) / 60000);
-                        const ss = Math.floor((diff % 60000) / 1000);
-                        txt   = 'Deschis · închide în ' + pad(hh) + ':' + pad(mm) + ':' + pad(ss);
-                        color = '#4ade80';
-                        [dot, dotMobile].forEach(d => {
-                            if (d) { d.className = 'open-dot'; d.classList.add('open'); }
-                        });
-                    } else {
-                        txt   = 'Închis · deschidem la 09:00';
-                        color = '#f87171';
-                        [dot, dotMobile].forEach(d => {
-                            if (d) { d.className = 'open-dot'; d.classList.add('closed'); }
-                        });
-                    }
-
-                    [label, labelMobile].forEach(l => {
-                        if (l) { l.textContent = txt; l.style.color = color; }
-                    });
-                }
-
-                update();
-                setInterval(update, 1000);
-            })();
-
-            /* ============================
-               3. TIME-BASED RECOMMENDATION
-            ============================ */
-            (function() {
-                const rec = document.getElementById('time-recommendation');
-                const recText = document.getElementById('time-rec-text');
-                const recLabel = document.getElementById('time-rec-label');
-                const recClose = document.getElementById('time-rec-close');
-                if (!rec) return;
-
-                const h = new Date().getHours();
-                let msg = '', label = 'acum la flēr';
-
-                if (h >= 9 && h < 11) {
-                    label = 'bună dimineața ☀️';
-                    msg = 'Momentul perfect pentru un Daily Ritual — cafeaua ta de început.';
-                } else if (h >= 11 && h < 14) {
-                    label = 'ora brunch-ului 🍳';
-                    msg = 'Încearcă una din Compositions — salate levantine gândite cu grijă.';
-                } else if (h >= 14 && h < 17) {
-                    label = 'după-amiaza leneșă ☁️';
-                    msg = 'Un Cold Brew sau Quiet Storm e tot ce mai ai nevoie acum.';
-                } else if (h >= 17 && h < 19) {
-                    label = 'golden hour 🌇';
-                    msg = 'Lasă-te pe mâna barmanului — Velvet Hour te așteaptă.';
-                } else {
-                    return; // Nu afișăm dacă e închis
-                }
-
-                recText.textContent = msg;
-                recLabel.textContent = label;
-
-                setTimeout(() => rec.classList.add('visible'), 2500);
-                recClose.addEventListener('click', () => rec.classList.remove('visible'));
-            })();
-
-            /* ============================
-               4. PARALLAX WATERMARK — rAF loop (smooth pe iOS/Android)
-            ============================ */
-            (function() {
-                const watermark = document.querySelector('.bg-watermark');
-                if (!watermark) return;
-                if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-                let currentY = 0, targetY = 0, rafId = null;
-
-                function tick() {
-                    targetY = window.scrollY * 0.18;
-                    // Lerp pentru smoothness extra
-                    currentY += (targetY - currentY) * 0.08;
-                    watermark.style.transform =
-                        'translate3d(-50%, calc(-50% + ' + currentY.toFixed(2) + 'px), 0)';
-                    rafId = requestAnimationFrame(tick);
-                }
-
-                tick();
-            })();
-
-            /* ============================
-               5. EASTER EGG (3 clicks pe logo)
-            ============================ */
-            (function() {
-                const logo  = document.getElementById('brand-logo');
-                const toast = document.getElementById('easter-egg-toast');
-                if (!logo || !toast) return;
-
-                const messages = [
-                    '✦ ai găsit secretul — bine ai venit în cerc ✦',
-                    '✦ cafeaua e rece, dar secretul e cald ✦',
-                    '✦ ești curios. îți place de tine ✦',
-                ];
-                let clicks = 0, timer = null, msgIdx = 0;
-
-                logo.addEventListener('click', e => {
-                    e.preventDefault();
-                    clicks++;
-                    clearTimeout(timer);
-                    timer = setTimeout(() => { clicks = 0; }, 800);
-
-                    if (clicks >= 3) {
-                        clicks = 0;
-                        toast.textContent = messages[msgIdx % messages.length];
-                        msgIdx++;
-                        toast.classList.add('show');
-                        setTimeout(() => toast.classList.remove('show'), 3000);
-                    }
-                });
-            })();
-
-            /* ============================
-               6. SCROLL PROGRESS BAR
-            ============================ */
-            (function() {
-                const bar = document.getElementById('scroll-progress');
-                if (!bar) return;
-                window.addEventListener('scroll', () => {
-                    const doc  = document.documentElement;
-                    const scrolled = doc.scrollTop || document.body.scrollTop;
-                    const total = doc.scrollHeight - doc.clientHeight;
-                    bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
-                }, { passive: true });
-            })();
-
-
-            /* ============================
-               A. MEMORIE LIMBĂ (localStorage)
-            ============================ */
-            try {
-                const savedLang = localStorage.getItem('fler_lang');
-                if (savedLang === 'en') {
-                    langToggle.click();
-                }
-            } catch(e) {}
-
-            langToggle.addEventListener('click', () => {
-                try { localStorage.setItem('fler_lang', currentLang); } catch(e) {}
-            });
-
-            /* ============================
-               B. KEYBOARD SHORTCUTS
-            ============================ */
-            document.addEventListener('keydown', e => {
-                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-                if (e.key === '1') {
-                    const foodBtn = document.querySelector('.tab-btn[data-tab="food"]');
-                    if (foodBtn && !foodBtn.classList.contains('active')) foodBtn.click();
-                }
-                if (e.key === '2') {
-                    const drinksBtn = document.querySelector('.tab-btn[data-tab="drinks"]');
-                    if (drinksBtn && !drinksBtn.classList.contains('active')) drinksBtn.click();
-                }
-            });
-
-            /* ============================
-               C. HAPTIC FEEDBACK (Vibration API)
-            ============================ */
-            document.querySelectorAll('.tab-btn, .welcome-btn, .back-to-top').forEach(el => {
-                el.addEventListener('click', () => {
-                    if (navigator.vibrate) navigator.vibrate(8);
-                });
-            });
-
-            /* ============================
-               D. PARTICULE DE ABUR (Canvas)
-            ============================ */
-            (function() {
-                const canvas = document.createElement('canvas');
-                canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;opacity:0.35;';
-                document.body.appendChild(canvas);
-                const ctx = canvas.getContext('2d');
-                let W = window.innerWidth, H = window.innerHeight;
-                canvas.width = W; canvas.height = H;
-
-                window.addEventListener('resize', () => {
-                    W = window.innerWidth; H = window.innerHeight;
-                    canvas.width = W; canvas.height = H;
-                }, { passive: true });
-
-                const particles = Array.from({ length: 28 }, () => ({
-                    x: Math.random() * W,
-                    y: Math.random() * H,
-                    r: Math.random() * 2.5 + 0.5,
-                    vx: (Math.random() - 0.5) * 0.2,
-                    vy: -(Math.random() * 0.4 + 0.1),
-                    alpha: Math.random() * 0.4 + 0.05,
-                }));
-
-                function drawParticles() {
-                    ctx.clearRect(0, 0, W, H);
-                    particles.forEach(p => {
-                        ctx.beginPath();
-                        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-                        ctx.fillStyle = `rgba(212,192,169,${p.alpha})`;
-                        ctx.fill();
-                        p.x += p.vx;
-                        p.y += p.vy;
-                        p.alpha -= 0.0008;
-                        if (p.y < -10 || p.alpha <= 0) {
-                            p.x = Math.random() * W;
-                            p.y = H + 5;
-                            p.alpha = Math.random() * 0.35 + 0.05;
-                            p.vx = (Math.random() - 0.5) * 0.2;
-                            p.vy = -(Math.random() * 0.4 + 0.1);
-                            p.r = Math.random() * 2.5 + 0.5;
-                        }
-                    });
-                    requestAnimationFrame(drawParticles);
-                }
-                drawParticles();
-            })();
-
-            /* ============================
-               E. TEMĂ CROMATICĂ DUPĂ ORĂ
-            ============================ */
-            (function() {
-                const h = new Date().getHours();
-                if (h >= 9 && h < 12) {
-                    document.body.classList.add('theme-morning');
-                } else if (h >= 17) {
-                    document.body.classList.add('theme-evening');
-                }
-            })();
-
-            /* ============================
-               F. TONIGHT'S PICK + COUNTDOWN
-            ============================ */
-            (function() {
-                const rec     = document.getElementById('time-recommendation');
-                const recText = document.getElementById('time-rec-text');
-                const recLabel= document.getElementById('time-rec-label');
-                if (!rec) return;
-
-                const now  = new Date();
-                const h    = now.getHours();
-                const m    = now.getMinutes();
-                const mins = h * 60 + m;
-                const openMins  = 9 * 60;
-                const closeMins = 19 * 60;
-
-                if (mins < openMins || mins >= closeMins) {
-                    // COUNTDOWN la deschidere
-                    const openTomorrow = new Date();
-                    openTomorrow.setDate(openTomorrow.getDate() + (mins >= closeMins ? 1 : 0));
-                    openTomorrow.setHours(9, 0, 0, 0);
-                    if (mins < openMins) openTomorrow.setDate(openTomorrow.getDate());
-
-                    recLabel.textContent = 'suntem închiși momentan';
-                    recText.innerHTML = '<span class="countdown-display" id="countdown-clock">--:--:--</span><br>până la deschidere';
-
-                    setTimeout(() => rec.classList.add('visible'), 2500);
-
-                    function updateCountdown() {
-                        const diff = openTomorrow - new Date();
-                        if (diff <= 0) { rec.classList.remove('visible'); return; }
-                        const hh = String(Math.floor(diff / 3600000)).padStart(2, '0');
-                        const mm = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
-                        const ss = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
-                        const el = document.getElementById('countdown-clock');
-                        if (el) el.textContent = hh + ':' + mm + ':' + ss;
-                    }
-                    updateCountdown();
-                    setInterval(updateCountdown, 1000);
-                    return;
-                }
-
-                if (h >= 17) {
-                    // TONIGHT'S PICK
-                    const picks = [
-                        { name: 'Velvet Espresso Martini', note: 'seara perfectă într-un pahar.' },
-                        { name: 'Negroni', note: 'clasic, echilibrat, fără compromisuri.' },
-                        { name: 'Old Fashioned', note: 'pentru cei care știu ce vor.' },
-                        { name: 'Cherry Silk', note: 'delicat și profund în același timp.' },
-                        { name: 'Arak Madu', note: 'o poveste levantină în fiecare înghițitură.' },
-                        { name: 'Fler Boozy Affogato', note: 'finalul perfect pentru orice seară.' },
-                    ];
-                    const pick = picks[new Date().getDay() % picks.length];
-                    recLabel.innerHTML = '<span class="time-pick-badge">Tonight's Pick</span>';
-                    recText.innerHTML = '<strong style="color:var(--text-main);font-size:14px;">' + pick.name + '</strong><br>' + pick.note;
-                    setTimeout(() => rec.classList.add('visible'), 2500);
-                }
-
-                const recClose = document.getElementById('time-rec-close');
-                if (recClose) recClose.addEventListener('click', () => rec.classList.remove('visible'));
-            })();
-
-            /* ============================
-               G. SPOTIFY WIDGET
-            ============================ */
-            (function() {
-                const widget = document.getElementById('spotify-widget');
-                if (!widget) return;
-                const tracks = [
-                    'Arabic Soul Sessions', 'flērcafē vibes', 'Morning Ritual',
-                    'Late Afternoon Jazz', 'Levant Lounge', 'Specialty Coffee Sounds'
-                ];
-                const track = document.getElementById('spotify-track');
-                if (track) track.textContent = tracks[new Date().getHours() % tracks.length];
-                setTimeout(() => widget.classList.add('visible'), 3500);
-            })();
-
-            /* ============================
-               H. TRANZIȚIE CINEMATICĂ TABS (override)
-            ============================ */
-            tabButtons.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const tabId = btn.getAttribute('data-tab');
-                    const currentActive = document.querySelector('.tab-content.active');
-
-                    if (currentActive && currentActive.id !== tabId + '-tab') {
-                        currentActive.classList.add('exiting');
-                        setTimeout(() => {
-                            currentActive.classList.remove('active', 'exiting');
-
-                            tabButtons.forEach(b => b.classList.remove('active'));
-                            btn.classList.add('active');
-
-                            const next = document.getElementById(tabId + '-tab');
-                            next.classList.add('active');
-                            next.querySelectorAll('.menu-section').forEach(s => s.classList.add('is-visible'));
-
-                            if (navigator.vibrate) navigator.vibrate([5, 30, 5]);
-                        }, 280);
-                    }
-                });
-            });
-
-            /* ============================
-               I. TRAIL (desktop mouse + mobile touch)
-            ============================ */
-            (function() {
-                const trails = Array.from({ length: 6 }, (_, i) => document.getElementById('trail-' + i));
-                const positions = Array.from({ length: 6 }, () => ({ x: -100, y: -100 }));
-                let curX = -100, curY = -100, active = false;
-
-                // Desktop
-                document.addEventListener('mousemove', e => {
-                    curX = e.clientX; curY = e.clientY; active = true;
-                });
-                document.addEventListener('mouseleave', () => { active = false; });
-
-                // Mobile touch
-                document.addEventListener('touchmove', e => {
-                    const t = e.touches[0];
-                    curX = t.clientX; curY = t.clientY; active = true;
-                }, { passive: true });
-                document.addEventListener('touchend', () => {
-                    // fade out treptat după touch end
-                    setTimeout(() => { active = false; }, 300);
-                }, { passive: true });
-
-                (function animateTrail() {
-                    if (active) {
-                        positions[0].x += (curX - positions[0].x) * 0.5;
-                        positions[0].y += (curY - positions[0].y) * 0.5;
-                        for (let i = 1; i < 6; i++) {
-                            positions[i].x += (positions[i-1].x - positions[i].x) * 0.45;
-                            positions[i].y += (positions[i-1].y - positions[i].y) * 0.45;
-                        }
-                        trails.forEach((t, i) => {
-                            if (t) {
-                                t.style.left    = positions[i].x + 'px';
-                                t.style.top     = positions[i].y + 'px';
-                                t.style.opacity = String(0.65 - i * 0.09);
-                            }
-                        });
-                    } else {
-                        trails.forEach(t => { if (t) t.style.opacity = '0'; });
-                    }
-                    requestAnimationFrame(animateTrail);
-                })();
-            })();
-
-            /* LANGUAGE TOGGLE RO/EN */
-            const langToggle = document.getElementById('welcome-lang-toggle');
-            const welcomeTitle = document.getElementById('welcome-title');
-            const welcomeText = document.getElementById('welcome-text');
-            const welcomeReviewBtn = document.getElementById('welcome-review-btn');
-            const welcomeContinueBtn = document.getElementById('welcome-continue');
-            let currentLang = 'ro';
-
-            langToggle.addEventListener('click', () => {
-                currentLang = currentLang === 'ro' ? 'en' : 'ro';
-                langToggle.textContent = currentLang === 'ro' ? 'EN' : 'RO';
-
-                welcomeTitle.textContent = welcomeTitle.getAttribute(`data-${currentLang}`);
-                welcomeText.innerHTML = welcomeText.getAttribute(`data-${currentLang}`);
-
-                const reviewLabel = welcomeReviewBtn.querySelector('span');
-                reviewLabel.textContent = welcomeReviewBtn.getAttribute(`data-${currentLang}`);
-
-                welcomeContinueBtn.textContent = welcomeContinueBtn.getAttribute(`data-${currentLang}`);
             });
         });
     </script>
