@@ -1061,6 +1061,44 @@
 </head>
 <body>
 
+    <!-- WELCOME POPUP -->
+    <div class="welcome-overlay" id="welcome-overlay">
+        <div class="welcome-modal">
+            <button class="welcome-close" id="welcome-close" aria-label="Închide"><i class="fas fa-times"></i></button>
+            <button class="welcome-lang-toggle" id="welcome-lang-toggle" type="button">EN</button>
+            <div class="welcome-icon"><i class="fas fa-mug-hot"></i></div>
+            <div class="welcome-brand">flērcafē</div>
+            <p class="welcome-title" id="welcome-title"
+               data-ro="Meniul nostru e gândit ca o poveste, capitol cu capitol."
+               data-en="Our menu is crafted like a story, chapter by chapter.">
+               Meniul nostru e gândit ca o poveste, capitol cu capitol.</p>
+            <p class="welcome-text" id="welcome-text"
+               data-ro="De la <em>Openings</em> și <em>Daily Ritual</em>, prin <em>Compositions</em> și <em>Centerpiece</em>, până la <em>Finale</em> — fiecare secțiune e un pas într-o călătorie gândită cu grijă. Sperăm ca experiența ta la flērcafē să fi fost propriul tău capitol memorabil, iar dacă a fost, ne-ar însemna mult să-l spui și altora printr-o recenzie. 🤍"
+               data-en="From <em>Openings</em> and <em>Daily Ritual</em>, through <em>Compositions</em> and <em>Centerpiece</em>, all the way to <em>Finale</em> — every section is a step in a carefully crafted journey. We hope your time at flērcafē was a memorable chapter of its own, and if it was, it would mean a lot if you shared it with others through a review. 🤍">
+               De la <em>Openings</em> și <em>Daily Ritual</em>, prin <em>Compositions</em> și <em>Centerpiece</em>, până la <em>Finale</em> — fiecare secțiune e un pas într-o călătorie gândită cu grijă. Sperăm ca experiența ta la flērcafē să fi fost propriul tău capitol memorabil, iar dacă a fost, ne-ar însemna mult să-l spui și altora printr-o recenzie. 🤍
+            </p>
+            <div class="welcome-actions">
+                <a href="https://search.google.com/local/writereview?placeid=ChIJ3dfcCJkDs0ARUOwAjSCSRGo" target="_blank" class="welcome-btn welcome-btn-primary" id="welcome-review-btn" data-ro="Lasă o recenzie ⭐" data-en="Leave a review ⭐">
+                    <i class="fab fa-google"></i><span>Lasă o recenzie ⭐</span>
+                </a>
+                <button class="welcome-btn welcome-btn-secondary" id="welcome-continue" data-ro="Continuă spre meniu" data-en="Continue to menu">
+                    Continuă spre meniu
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CURSOR + EFFECTS -->
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-ring" id="cursor-ring"></div>
+    <div class="scroll-progress" id="scroll-progress"></div>
+    <div class="easter-egg-toast" id="easter-egg-toast"></div>
+    <div class="time-recommendation" id="time-recommendation">
+        <button class="time-rec-close" id="time-rec-close">✕</button>
+        <strong id="time-rec-label">acum la flēr</strong>
+        <span id="time-rec-text"></span>
+    </div>
+
     <!-- TOP INFO BAR -->
     <header class="top-bar">
         <div class="top-bar-inner">
