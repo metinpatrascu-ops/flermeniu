@@ -1106,8 +1106,6 @@
             display: block !important;
             animation: layerExit 0.28s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
             pointer-events: none;
-            position: absolute;
-            width: 100%;
         }
 
         /* ===== CURSOR TRAIL ===== */
@@ -3182,35 +3180,50 @@
             /* cursor: original browser cursor păstrat */
 
             /* ============================
-               2. OPEN NOW INDICATOR
+               2. OPEN NOW INDICATOR — live countdown
             ============================ */
             (function() {
-                const dot   = document.getElementById('open-dot');
-                const label = document.getElementById('open-label');
-                if (!dot || !label) return;
-                const now   = new Date();
-                const h     = now.getHours();
-                const m     = now.getMinutes();
-                const mins  = h * 60 + m;
-                const open  = 9 * 60, close = 19 * 60;
-                const isOpen = mins >= open && mins < close;
-                const dotMobile  = document.getElementById('open-dot-mobile');
+                const dot         = document.getElementById('open-dot');
+                const label       = document.getElementById('open-label');
+                const dotMobile   = document.getElementById('open-dot-mobile');
                 const labelMobile = document.getElementById('open-label-mobile');
+                if (!dot || !label) return;
 
-                [dot, dotMobile].forEach(d => { if(d) d.classList.add(isOpen ? 'open' : 'closed'); });
+                function pad(n) { return String(n).padStart(2, '0'); }
 
-                if (isOpen) {
-                    const minsLeft = close - mins;
-                    const hLeft = Math.floor(minsLeft / 60);
-                    const mLeft = minsLeft % 60;
-                    const txt = hLeft > 0
-                        ? 'Deschis · închide în ' + hLeft + 'h ' + mLeft + 'min'
-                        : 'Deschis · închide în ' + mLeft + ' min';
-                    [label, labelMobile].forEach(l => { if(l) { l.textContent = txt; l.style.color = '#4ade80'; } });
-                } else {
-                    const txt = 'Închis · deschidem la 09:00';
-                    [label, labelMobile].forEach(l => { if(l) { l.textContent = txt; l.style.color = '#f87171'; } });
+                function update() {
+                    const now  = new Date();
+                    const mins = now.getHours() * 60 + now.getMinutes();
+                    const isOpen = mins >= 540 && mins < 1140;
+                    let txt, color;
+
+                    if (isOpen) {
+                        const closeDate = new Date();
+                        closeDate.setHours(19, 0, 0, 0);
+                        const diff = closeDate - now;
+                        const hh = Math.floor(diff / 3600000);
+                        const mm = Math.floor((diff % 3600000) / 60000);
+                        const ss = Math.floor((diff % 60000) / 1000);
+                        txt   = 'Deschis · închide în ' + pad(hh) + ':' + pad(mm) + ':' + pad(ss);
+                        color = '#4ade80';
+                        [dot, dotMobile].forEach(d => {
+                            if (d) { d.className = 'open-dot'; d.classList.add('open'); }
+                        });
+                    } else {
+                        txt   = 'Închis · deschidem la 09:00';
+                        color = '#f87171';
+                        [dot, dotMobile].forEach(d => {
+                            if (d) { d.className = 'open-dot'; d.classList.add('closed'); }
+                        });
+                    }
+
+                    [label, labelMobile].forEach(l => {
+                        if (l) { l.textContent = txt; l.style.color = color; }
+                    });
                 }
+
+                update();
+                setInterval(update, 1000);
             })();
 
             /* ============================
