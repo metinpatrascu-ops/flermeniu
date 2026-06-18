@@ -60,6 +60,7 @@
 
         /* WATERMARK BACKGROUND */
         .bg-watermark {
+            will-change: transform;
             position: fixed;
             top: 50%;
             left: 50%;
@@ -631,9 +632,26 @@
         @media (max-width: 768px) {
             .top-bar-info { display: none; }
             .top-bar-inner { justify-content: space-between; }
-            body { padding-top: 49px; }
-            .menu-tabs-wrapper { top: 49px; }
+            /* Rândul secundar cu open indicator pe mobil */
+            .top-bar-mobile-status {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 5px 0 8px;
+                border-top: 1px solid rgba(179, 93, 45, 0.12);
+                gap: 6px;
+                font-size: 11px;
+                font-weight: 600;
+            }
+            body { padding-top: 76px; }
+            .menu-tabs-wrapper { top: 76px; }
         }
+
+        @media (min-width: 769px) {
+            .top-bar-mobile-status { display: none; }
+        }
+
+
 
         /* ===== FOOTER ===== */
         .site-footer {
@@ -950,9 +968,192 @@
             .welcome-modal { padding: 32px 22px 24px; }
             .welcome-title { font-size: 17px; }
         }
+
+        /* ===== 1. CUSTOM CURSOR ===== */
+        @media (hover: hover) and (pointer: fine) {
+            * { cursor: none !important; }
+        }
+
+        .cursor-dot {
+            position: fixed;
+            top: 0; left: 0;
+            width: 8px; height: 8px;
+            background: var(--gold);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease, opacity 0.2s ease;
+            mix-blend-mode: screen;
+        }
+
+        .cursor-ring {
+            position: fixed;
+            top: 0; left: 0;
+            width: 32px; height: 32px;
+            border: 1.5px solid rgba(179, 93, 45, 0.6);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease, opacity 0.25s ease;
+        }
+
+        .cursor-ring.hovering {
+            width: 48px; height: 48px;
+            border-color: var(--gold);
+        }
+
+        @media (hover: none) {
+            .cursor-dot, .cursor-ring { display: none; }
+        }
+
+        /* ===== 2. OPEN NOW INDICATOR ===== */
+        .open-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .open-dot {
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .open-dot.open {
+            background: #4ade80;
+            box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.6);
+            animation: pulse-green 2s infinite;
+        }
+
+        .open-dot.closed {
+            background: #f87171;
+        }
+
+        @keyframes pulse-green {
+            0%   { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.6); }
+            70%  { box-shadow: 0 0 0 6px rgba(74, 222, 128, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
+        }
+
+        /* ===== 3. TIME-BASED RECOMMENDATION ===== */
+        .time-recommendation {
+            position: fixed;
+            bottom: 80px;
+            left: 24px;
+            z-index: 150;
+            max-width: 230px;
+            background: rgba(30, 14, 5, 0.92);
+            border: 1px solid rgba(179, 93, 45, 0.3);
+            border-radius: 12px;
+            padding: 12px 16px;
+            font-size: 12px;
+            color: var(--text-dim);
+            line-height: 1.5;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            pointer-events: none;
+        }
+
+        .time-recommendation.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+
+        .time-recommendation strong {
+            display: block;
+            color: var(--gold);
+            font-size: 11px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .time-rec-close {
+            position: absolute;
+            top: 6px; right: 8px;
+            background: none;
+            border: none;
+            color: rgba(212, 192, 169, 0.4);
+            cursor: pointer;
+            font-size: 11px;
+            padding: 2px;
+            line-height: 1;
+        }
+
+        .time-rec-close:hover { color: var(--gold); }
+
+        @media (max-width: 600px) {
+            .time-recommendation { left: 16px; bottom: 90px; max-width: 200px; }
+        }
+
+        /* ===== 4. SCROLL PROGRESS BAR ===== */
+        .scroll-progress {
+            position: fixed;
+            top: 0; left: 0;
+            height: 2px;
+            width: 0%;
+            background: linear-gradient(90deg, var(--gold), rgba(179, 93, 45, 0.4));
+            z-index: 1000;
+            transition: width 0.05s linear;
+            pointer-events: none;
+        }
+
+        /* ===== 5. EASTER EGG ===== */
+        .easter-egg-toast {
+            position: fixed;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: rgba(30, 14, 5, 0.96);
+            border: 1px solid rgba(179, 93, 45, 0.4);
+            border-radius: 24px;
+            padding: 12px 24px;
+            font-family: var(--font-accent);
+            font-style: italic;
+            font-size: 14px;
+            color: var(--text-dim);
+            white-space: nowrap;
+            z-index: 5000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            backdrop-filter: blur(12px);
+        }
+
+        .easter-egg-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .top-bar-brand { cursor: none !important; }
+
     </style>
 </head>
 <body>
+
+
+    <!-- CURSOR -->
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-ring" id="cursor-ring"></div>
+
+    <!-- SCROLL PROGRESS -->
+    <div class="scroll-progress" id="scroll-progress"></div>
+
+    <!-- EASTER EGG TOAST -->
+    <div class="easter-egg-toast" id="easter-egg-toast">✦ ai găsit secretul — bine ai venit în cerc ✦</div>
+
+    <!-- TIME RECOMMENDATION -->
+    <div class="time-recommendation" id="time-recommendation">
+        <button class="time-rec-close" id="time-rec-close">✕</button>
+        <strong id="time-rec-label">acum la flēr</strong>
+        <span id="time-rec-text"></span>
+    </div>
 
     <!-- WELCOME POPUP -->
     <div class="welcome-overlay" id="welcome-overlay">
@@ -987,15 +1188,17 @@
     <!-- TOP INFO BAR -->
     <header class="top-bar">
         <div class="top-bar-inner">
-            <a href="https://flercafe.ro" class="top-bar-brand">flērcafē</a>
+            <a href="https://flercafe.ro" class="top-bar-brand" id="brand-logo">flērcafē</a>
             <div class="top-bar-info">
                 <a href="https://maps.google.com/?q=Bulevardul+Primaverii+15+Bucuresti" target="_blank" class="top-bar-item">
                     <i class="fas fa-map-marker-alt"></i>
                     Bulevardul Primăverii 15, MARe · București
                 </a>
                 <span class="top-bar-item">
-                    <i class="far fa-clock"></i>
-                    09:00 - 19:00
+                    <span class="open-indicator">
+                        <span class="open-dot" id="open-dot"></span>
+                        <span id="open-label">09:00 - 19:00</span>
+                    </span>
                 </span>
                 <a href="mailto:contact@flercafe.ro" class="top-bar-item">
                     <i class="far fa-envelope"></i>
@@ -1006,6 +1209,11 @@
                 <a href="https://www.instagram.com/fler__cafe/" target="_blank" title="Instagram">
                     <i class="fab fa-instagram"></i>
                 </a>
+            </div>
+            <!-- STATUS ROW MOBIL -->
+            <div class="top-bar-mobile-status">
+                <span class="open-dot" id="open-dot-mobile"></span>
+                <span id="open-label-mobile" style="color: var(--text-dim);">09:00 - 19:00</span>
             </div>
         </div>
     </header>
@@ -2890,6 +3098,171 @@
             welcomeOverlay.addEventListener('click', (e) => {
                 if (e.target === welcomeOverlay) closeWelcome();
             });
+
+
+            /* ============================
+               1. CUSTOM CURSOR
+            ============================ */
+            const cursorDot  = document.getElementById('cursor-dot');
+            const cursorRing = document.getElementById('cursor-ring');
+            let mouseX = 0, mouseY = 0;
+            let ringX  = 0, ringY  = 0;
+
+            if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+                document.addEventListener('mousemove', e => {
+                    mouseX = e.clientX; mouseY = e.clientY;
+                    cursorDot.style.left = mouseX + 'px';
+                    cursorDot.style.top  = mouseY + 'px';
+                });
+
+                (function animateRing() {
+                    ringX += (mouseX - ringX) * 0.12;
+                    ringY += (mouseY - ringY) * 0.12;
+                    cursorRing.style.left = ringX + 'px';
+                    cursorRing.style.top  = ringY + 'px';
+                    requestAnimationFrame(animateRing);
+                })();
+
+                document.querySelectorAll('a, button, [data-story]').forEach(el => {
+                    el.addEventListener('mouseenter', () => cursorRing.classList.add('hovering'));
+                    el.addEventListener('mouseleave', () => cursorRing.classList.remove('hovering'));
+                });
+            }
+
+            /* ============================
+               2. OPEN NOW INDICATOR
+            ============================ */
+            (function() {
+                const dot   = document.getElementById('open-dot');
+                const label = document.getElementById('open-label');
+                if (!dot || !label) return;
+                const now   = new Date();
+                const h     = now.getHours();
+                const m     = now.getMinutes();
+                const mins  = h * 60 + m;
+                const open  = 9 * 60, close = 19 * 60;
+                const isOpen = mins >= open && mins < close;
+                const dotMobile  = document.getElementById('open-dot-mobile');
+                const labelMobile = document.getElementById('open-label-mobile');
+
+                [dot, dotMobile].forEach(d => { if(d) d.classList.add(isOpen ? 'open' : 'closed'); });
+
+                if (isOpen) {
+                    const minsLeft = close - mins;
+                    const hLeft = Math.floor(minsLeft / 60);
+                    const mLeft = minsLeft % 60;
+                    const txt = hLeft > 0
+                        ? 'Deschis · închide în ' + hLeft + 'h ' + mLeft + 'min'
+                        : 'Deschis · închide în ' + mLeft + ' min';
+                    [label, labelMobile].forEach(l => { if(l) { l.textContent = txt; l.style.color = '#4ade80'; } });
+                } else {
+                    const txt = 'Închis · deschidem la 09:00';
+                    [label, labelMobile].forEach(l => { if(l) { l.textContent = txt; l.style.color = '#f87171'; } });
+                }
+            })();
+
+            /* ============================
+               3. TIME-BASED RECOMMENDATION
+            ============================ */
+            (function() {
+                const rec = document.getElementById('time-recommendation');
+                const recText = document.getElementById('time-rec-text');
+                const recLabel = document.getElementById('time-rec-label');
+                const recClose = document.getElementById('time-rec-close');
+                if (!rec) return;
+
+                const h = new Date().getHours();
+                let msg = '', label = 'acum la flēr';
+
+                if (h >= 9 && h < 11) {
+                    label = 'bună dimineața ☀️';
+                    msg = 'Momentul perfect pentru un Daily Ritual — cafeaua ta de început.';
+                } else if (h >= 11 && h < 14) {
+                    label = 'ora brunch-ului 🍳';
+                    msg = 'Încearcă una din Compositions — salate levantine gândite cu grijă.';
+                } else if (h >= 14 && h < 17) {
+                    label = 'după-amiaza leneșă ☁️';
+                    msg = 'Un Cold Brew sau Quiet Storm e tot ce mai ai nevoie acum.';
+                } else if (h >= 17 && h < 19) {
+                    label = 'golden hour 🌇';
+                    msg = 'Lasă-te pe mâna barmanului — Velvet Hour te așteaptă.';
+                } else {
+                    return; // Nu afișăm dacă e închis
+                }
+
+                recText.textContent = msg;
+                recLabel.textContent = label;
+
+                setTimeout(() => rec.classList.add('visible'), 2500);
+                recClose.addEventListener('click', () => rec.classList.remove('visible'));
+            })();
+
+            /* ============================
+               4. PARALLAX WATERMARK — rAF loop (smooth pe iOS/Android)
+            ============================ */
+            (function() {
+                const watermark = document.querySelector('.bg-watermark');
+                if (!watermark) return;
+                if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+                let currentY = 0, targetY = 0, rafId = null;
+
+                function tick() {
+                    targetY = window.scrollY * 0.18;
+                    // Lerp pentru smoothness extra
+                    currentY += (targetY - currentY) * 0.08;
+                    watermark.style.transform =
+                        'translate3d(-50%, calc(-50% + ' + currentY.toFixed(2) + 'px), 0)';
+                    rafId = requestAnimationFrame(tick);
+                }
+
+                tick();
+            })();
+
+            /* ============================
+               5. EASTER EGG (3 clicks pe logo)
+            ============================ */
+            (function() {
+                const logo  = document.getElementById('brand-logo');
+                const toast = document.getElementById('easter-egg-toast');
+                if (!logo || !toast) return;
+
+                const messages = [
+                    '✦ ai găsit secretul — bine ai venit în cerc ✦',
+                    '✦ cafeaua e rece, dar secretul e cald ✦',
+                    '✦ ești curios. îți place de tine ✦',
+                ];
+                let clicks = 0, timer = null, msgIdx = 0;
+
+                logo.addEventListener('click', e => {
+                    e.preventDefault();
+                    clicks++;
+                    clearTimeout(timer);
+                    timer = setTimeout(() => { clicks = 0; }, 800);
+
+                    if (clicks >= 3) {
+                        clicks = 0;
+                        toast.textContent = messages[msgIdx % messages.length];
+                        msgIdx++;
+                        toast.classList.add('show');
+                        setTimeout(() => toast.classList.remove('show'), 3000);
+                    }
+                });
+            })();
+
+            /* ============================
+               6. SCROLL PROGRESS BAR
+            ============================ */
+            (function() {
+                const bar = document.getElementById('scroll-progress');
+                if (!bar) return;
+                window.addEventListener('scroll', () => {
+                    const doc  = document.documentElement;
+                    const scrolled = doc.scrollTop || document.body.scrollTop;
+                    const total = doc.scrollHeight - doc.clientHeight;
+                    bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+                }, { passive: true });
+            })();
 
             /* LANGUAGE TOGGLE RO/EN */
             const langToggle = document.getElementById('welcome-lang-toggle');
