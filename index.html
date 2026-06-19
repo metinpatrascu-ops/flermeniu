@@ -1279,15 +1279,17 @@
     <!-- TOP INFO BAR -->
     <header class="top-bar">
         <div class="top-bar-inner">
-            <a href="https://flercafe.ro" class="top-bar-brand">flērcafē</a>
+            <a href="https://flercafe.ro" class="top-bar-brand" id="brand-logo">flērcafē</a>
             <div class="top-bar-info">
                 <a href="https://maps.google.com/?q=Bulevardul+Primaverii+15+Bucuresti" target="_blank" class="top-bar-item">
                     <i class="fas fa-map-marker-alt"></i>
                     Bulevardul Primăverii 15, MARe · București
                 </a>
                 <span class="top-bar-item">
-                    <i class="far fa-clock"></i>
-                    All Day
+                    <span class="open-indicator">
+                        <span class="open-dot" id="open-dot"></span>
+                        <span id="open-label">09:00 - 19:00</span>
+                    </span>
                 </span>
                 <a href="mailto:contact@flercafe.ro" class="top-bar-item">
                     <i class="far fa-envelope"></i>
@@ -1299,6 +1301,10 @@
                     <i class="fab fa-instagram"></i>
                 </a>
             </div>
+        </div>
+        <div class="top-bar-mobile-status">
+            <span class="open-dot" id="open-dot-mobile"></span>
+            <span id="open-label-mobile">09:00 - 19:00</span>
         </div>
     </header>
 
@@ -2872,6 +2878,18 @@
                                 </td>
                                 <td class="price">20 RON</td>
                             </tr>
+                            <tr>
+                                <td>
+                                    <span class="item-name">Coca Cola Original</span><span class="ml">330ml</span>
+                                </td>
+                                <td class="price">18 RON</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="item-name">Coca Cola 0</span><span class="ml">330ml</span>
+                                </td>
+                                <td class="price">18 RON</td>
+                            </tr>
                         </table>
                     </div>
 
@@ -2904,6 +2922,18 @@
                                     <span class="item-name">Bere artizanală Classic American IPA</span><span class="ml">330ml</span>
                                 </td>
                                 <td class="price">30 RON</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="item-name">Heineken</span><span class="ml">330ml</span>
+                                </td>
+                                <td class="price">20 RON</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="item-name">Heineken 0%</span><span class="ml">330ml</span>
+                                </td>
+                                <td class="price">20 RON</td>
                             </tr>
                         </table>
                     </div>
