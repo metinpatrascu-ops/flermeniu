@@ -1071,7 +1071,7 @@
         @media print {
             .top-bar, .welcome-overlay, .floating-actions,
             .time-recommendation, .easter-egg-toast, .scroll-progress,
-            .site-footer, .touch-particle, .text-size-controls {
+            .site-footer, .touch-particle {
                 display: none !important;
             }
             body { padding-top: 0 !important; background: #fff !important; color: #000 !important; }
@@ -1088,46 +1088,7 @@
         }
 
 
-        /* ===== TEXT SIZE CONTROL ===== */
         html { font-size: 100%; }
-        .text-size-controls {
-            position: fixed;
-            top: 50%;
-            right: 0;
-            transform: translateY(-50%);
-            z-index: 160;
-            display: flex;
-            flex-direction: column;
-            background: rgba(30,14,5,0.92);
-            border: 1px solid rgba(179,93,45,0.3);
-            border-right: none;
-            border-radius: 10px 0 0 10px;
-            overflow: hidden;
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            box-shadow: -2px 4px 18px rgba(0,0,0,0.3);
-        }
-        .text-size-btn {
-            width: 34px; height: 34px;
-            background: transparent;
-            border: none;
-            border-bottom: 1px solid rgba(179,93,45,0.2);
-            color: var(--text-dim);
-            font-family: var(--font-main);
-            font-weight: 800;
-            cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            transition: background-color 0.25s ease, color 0.25s ease;
-        }
-        .text-size-btn:last-child { border-bottom: none; }
-        .text-size-btn:hover { background: var(--gold); color: var(--brand-brown-dark); }
-        .text-size-btn.minus { font-size: 11px; }
-        .text-size-btn.plus  { font-size: 14px; }
-
-        @media (max-width: 600px) {
-            .text-size-controls { top: auto; bottom: 90px; right: 0; transform: none; flex-direction: row; border-radius: 10px 0 0 10px; }
-            .text-size-btn { border-bottom: none; border-right: 1px solid rgba(179,93,45,0.2); width: 32px; height: 32px; }
-            .text-size-btn:last-child { border-right: none; }
-        }
 
         /* ===== CELEBRARE LA RECENZIE ===== */
         .celebrate-particle {
@@ -1260,11 +1221,6 @@
     </div>
 
     <!-- TEXT SIZE CONTROLS -->
-    <div class="text-size-controls">
-        <button class="text-size-btn minus" id="text-size-minus" title="Text mai mic" aria-label="Text mai mic">A-</button>
-        <button class="text-size-btn plus" id="text-size-plus" title="Text mai mare" aria-label="Text mai mare">A+</button>
-    </div>
-
     <div class="celebrate-thanks" id="celebrate-thanks">Mulțumim din suflet! 🤍</div>
 
     <!-- CURSOR + EFFECTS -->
@@ -3279,38 +3235,6 @@
                 });
             }
 
-            /* CONTROL MĂRIME TEXT (A- / A+) */
-            (function() {
-                const minusBtn = document.getElementById('text-size-minus');
-                const plusBtn  = document.getElementById('text-size-plus');
-                if (!minusBtn || !plusBtn) return;
-
-                const STEP = 8;     // procente per click
-                const MIN  = 80;
-                const MAX  = 140;
-                let size = 100;
-
-                try {
-                    const saved = parseInt(localStorage.getItem('fler_text_size'), 10);
-                    if (!isNaN(saved)) size = saved;
-                } catch(e) {}
-
-                function apply() {
-                    document.documentElement.style.fontSize = size + '%';
-                    try { localStorage.setItem('fler_text_size', String(size)); } catch(e) {}
-                }
-                apply();
-
-                minusBtn.addEventListener('click', () => {
-                    size = Math.max(MIN, size - STEP);
-                    apply();
-                });
-                plusBtn.addEventListener('click', () => {
-                    size = Math.min(MAX, size + STEP);
-                    apply();
-                });
-            })();
-
             /* HARTĂ DE AROME — un singur tap, evidențiere + scroll automat, caută în ambele tab-uri */
             (function() {
                 const chips = document.querySelectorAll('.flavor-chip');
@@ -3415,19 +3339,36 @@
                 });
             })();
 
-            /* PARALLAX WATERMARK — rAF smooth pe toate dispozitivele */
+            /* PARALLAX WATERMARK — rAF doar cât timp e nevoie (nu rulează infinit) */
             (function() {
                 const watermark = document.querySelector('.bg-watermark');
                 if (!watermark) return;
                 if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
                 let currentY = 0;
+                let isTicking = false;
+
                 function tick() {
                     const targetY = window.scrollY * 0.18;
                     currentY += (targetY - currentY) * 0.08;
                     watermark.style.transform = 'translate3d(-50%, calc(-50% + ' + currentY.toFixed(2) + 'px), 0)';
-                    requestAnimationFrame(tick);
+
+                    if (Math.abs(targetY - currentY) > 0.3) {
+                        requestAnimationFrame(tick);
+                    } else {
+                        isTicking = false; // ne oprim — economisim CPU/GPU când pagina e statică
+                    }
                 }
-                tick();
+
+                function requestTick() {
+                    if (!isTicking) {
+                        isTicking = true;
+                        requestAnimationFrame(tick);
+                    }
+                }
+
+                window.addEventListener('scroll', requestTick, { passive: true });
+                requestTick(); // poziție inițială
             })();
 
             const sections = document.querySelectorAll('.menu-section');
