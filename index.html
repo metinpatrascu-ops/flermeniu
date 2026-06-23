@@ -1227,6 +1227,117 @@
             .splash-screen { display: none !important; }
         }
 
+
+        
+
+
+        /* ===== TRANZIȚII ===== */
+
+        /* Fade-in page la încărcare */
+        body { animation: pageFadeIn 0.6s ease forwards; }
+        @keyframes pageFadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+
+        /* Tab switch — fade + slide */
+        .tab-content {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .tab-content.tab-switching {
+            opacity: 0;
+            transform: translateY(14px);
+            pointer-events: none;
+        }
+
+        /* Rânduri meniu — apare/dispare la scroll bidirecțional */
+        tr.has-item {
+            opacity: 0;
+            transform: translateY(18px);
+            transition: opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+                        transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: opacity, transform;
+        }
+        tr.has-item.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        tr.has-item.out-above {
+            opacity: 0;
+            transform: translateY(-12px);
+        }
+
+        /* Header slide-in la load */
+        .top-bar {
+            animation: headerSlideIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
+        }
+        @keyframes headerSlideIn {
+            from { opacity: 0; transform: translateY(-100%); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Intro logo + tagline */
+        .main-logo-img {
+            animation: introScale 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both;
+        }
+        @keyframes introScale {
+            from { opacity: 0; transform: scale(0.88) translateY(20px); }
+            to   { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .tagline {
+            animation: introFade 0.6s ease 0.5s both;
+        }
+        @keyframes introFade {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Tab bar slide-in */
+        .menu-tabs-wrapper {
+            animation: tabsSlideIn 0.5s ease 0.6s both;
+            transition: top 0s !important;
+        }
+        @keyframes tabsSlideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        @media print {
+            body { animation: none; }
+            .top-bar, .menu-tabs-wrapper, .main-logo-img, .tagline { animation: none; }
+        }
+
+
+        /* ===== PERFORMANCE & RESPONSIVE ===== */
+
+        /* Dezactivare animații pentru utilizatorii care preferă mișcare redusă */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+            tr.has-item { opacity: 1 !important; transform: none !important; }
+        }
+
+        /* Mobile — animații mai scurte, mai ușoare */
+        @media (max-width: 768px) {
+            tr.has-item {
+                transition: opacity 0.3s ease, transform 0.3s ease;
+            }
+            @keyframes pageFadeIn { from { opacity: 0.5; } to { opacity: 1; } }
+            @keyframes headerSlideIn {
+                from { opacity: 0; transform: translateY(-30px); }
+                to   { opacity: 1; transform: translateY(0); }
+            }
+        }
+
+        /* Tablet — comportament intermediar */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            tr.has-item {
+                transition: opacity 0.38s ease, transform 0.38s ease;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -3141,6 +3252,107 @@
                 });
             })();
 
+
+            /* ============================
+               INTRO SEQUENCE
+            ============================ */
+            (function() {
+                const splashDuration = 3200; // ms — cât durează splash-ul total
+                const topBar  = document.querySelector('.top-bar');
+                const logo    = document.querySelector('.intro-screen .main-logo-img');
+                const tagline = document.querySelector('.intro-screen .tagline');
+                const tabs    = document.querySelector('.menu-tabs-wrapper');
+
+                function runIntro() {
+                    if (topBar)  topBar.classList.add('intro-visible');
+                    if (logo)    logo.classList.add('intro-visible');
+                    if (tagline) tagline.classList.add('intro-visible');
+                    if (tabs)    tabs.classList.add('intro-visible');
+                }
+
+                // Verificăm dacă splash-ul există (prima vizită)
+                const splash = document.getElementById('splash-screen');
+                if (splash) {
+                    setTimeout(runIntro, splashDuration);
+                } else {
+                    // Fără splash — pornește imediat cu un mic delay
+                    setTimeout(runIntro, 80);
+                }
+            })();
+
+
+            /* SCROLL REVEAL PE RÂNDURI DE MENIU */
+            (function() {
+                const allRows = document.querySelectorAll('tr');
+                allRows.forEach(tr => {
+                    if (tr.querySelector('.item-name')) {
+                        tr.classList.add('menu-row-hidden');
+                    }
+                });
+
+                const rowObserver = new IntersectionObserver((entries) => {
+                    entries.forEach((entry, idx) => {
+                        if (entry.isIntersecting) {
+                            // Stagger mic bazat pe poziția în viewport
+                            const delay = Math.min(idx * 30, 200);
+                            setTimeout(() => {
+                                entry.target.classList.remove('menu-row-hidden');
+                                entry.target.classList.add('menu-row-visible');
+                            }, delay);
+                            rowObserver.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.15, rootMargin: '0px 0px -20px 0px' });
+
+                allRows.forEach(tr => {
+                    if (tr.classList.contains('menu-row-hidden')) {
+                        rowObserver.observe(tr);
+                    }
+                });
+            })();
+
+
+            /* SCROLL REVEAL BIDIRECȚIONAL */
+            (function() {
+                let lastY = window.scrollY;
+
+                // Marcăm rândurile
+                document.querySelectorAll('tr').forEach(tr => {
+                    if (tr.querySelector('.item-name')) tr.classList.add('has-item');
+                });
+
+                const obs = new IntersectionObserver((entries) => {
+                    const scrollingDown = window.scrollY >= lastY;
+                    lastY = window.scrollY;
+
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            // Intră în viewport — apare
+                            entry.target.classList.remove('out-above');
+                            entry.target.classList.add('in-view');
+                        } else {
+                            // Iese din viewport
+                            entry.target.classList.remove('in-view');
+                            if (!scrollingDown) {
+                                // Scrollăm în sus → iese pe jos (animație jos→sus la revenire)
+                                entry.target.classList.remove('out-above');
+                            } else {
+                                // Scrollăm în jos → iese pe sus
+                                entry.target.classList.add('out-above');
+                            }
+                        }
+                    });
+                }, {
+                    threshold: 0.12,
+                    rootMargin: '-5% 0px -5% 0px'
+                });
+
+                document.querySelectorAll('tr.has-item').forEach(tr => obs.observe(tr));
+
+                // Actualizează direcția de scroll
+                window.addEventListener('scroll', () => { lastY = window.scrollY; }, { passive: true });
+            })();
+
             /* OPEN NOW INDICATOR — countdown live până la deschidere/închidere */
             (function() {
                 const dot   = document.getElementById('open-dot');
@@ -3229,13 +3441,37 @@
                     welcomeText.innerHTML   = welcomeText.getAttribute('data-ro-returning');
                 }
 
-                setTimeout(() => {
-                    welcomeOverlay.classList.add('visible');
-                    document.body.style.overflow = 'hidden';
-                }, 600);
+                /* Popup apare când clientul ajunge la finalul meniului */
+                let popupShown = false;
+
+                const footerEl = document.querySelector('.site-footer');
+                const triggerEl = footerEl || document.querySelector('.tab-content');
+
+                const popupObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting && !popupShown) {
+                            popupShown = true;
+                            welcomeOverlay.classList.add('visible');
+                            document.body.style.overflow = 'hidden';
+                        }
+                    });
+                }, { threshold: 0.15 });
+
+                if (triggerEl) popupObserver.observe(triggerEl);
+
+                /* Dispare la orice atingere/click pe overlay */
                 welcomeClose.addEventListener('click', closeWelcome);
                 welcomeContinue.addEventListener('click', closeWelcome);
                 welcomeOverlay.addEventListener('click', e => { if (e.target === welcomeOverlay) closeWelcome(); });
+
+                /* Pe mobil — dispare și la swipe în jos */
+                let touchStartY = 0;
+                welcomeOverlay.addEventListener('touchstart', e => {
+                    touchStartY = e.touches[0].clientY;
+                }, { passive: true });
+                welcomeOverlay.addEventListener('touchmove', e => {
+                    if (e.touches[0].clientY - touchStartY > 50) closeWelcome();
+                }, { passive: true });
 
                 /* LANGUAGE TOGGLE RO/EN */
                 const langToggle = document.getElementById('welcome-lang-toggle');
@@ -3478,24 +3714,39 @@
             tabButtons.forEach(btn => {
                 btn.addEventListener('click', () => {
                     const tabId = btn.getAttribute('data-tab');
-                    
-                    tabButtons.forEach(b => b.classList.remove('active'));
-                    tabContents.forEach(c => c.classList.remove('active'));
-                    
-                    btn.classList.add('active');
-                    const activeTabContent = document.getElementById(`${tabId}-tab`);
-                    activeTabContent.classList.add('active');
-                    
-                    // Reveal immediately all items on active layer
-                    const activeSections = activeTabContent.querySelectorAll('.menu-section');
-                    activeSections.forEach(s => s.classList.add('is-visible'));
-                    
-                    // Smooth scroll past intro if needed
-                    const tabWrapper = document.querySelector('.menu-tabs-wrapper');
-                    const rect = tabWrapper.getBoundingClientRect();
-                    if (rect.top < 0) {
-                        tabWrapper.scrollIntoView({ behavior: 'smooth' });
-                    }
+                    const currentTab = document.querySelector('.tab-content.active');
+                    const nextTab = document.getElementById(tabId + '-tab');
+
+                    if (!nextTab || nextTab === currentTab) return;
+
+                    // 1. Fade out conținut curent
+                    if (currentTab) currentTab.classList.add('tab-switching');
+
+                    setTimeout(() => {
+                        // 2. Schimbă tab-ul
+                        tabButtons.forEach(b => b.classList.remove('active'));
+                        tabContents.forEach(c => c.classList.remove('active', 'tab-switching'));
+
+                        btn.classList.add('active');
+                        nextTab.classList.add('active', 'tab-switching');
+
+                        // 3. Reveal sections noi
+                        nextTab.querySelectorAll('.menu-section').forEach(s => s.classList.add('is-visible'));
+                        nextTab.querySelectorAll('tr.has-item').forEach(tr => {
+                            tr.classList.remove('out-above');
+                            tr.classList.add('in-view');
+                        });
+
+                        // 4. Scroll ÎNTOTDEAUNA la începutul meniului
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                        // 5. Fade in conținut nou
+                        requestAnimationFrame(() => {
+                            nextTab.classList.remove('tab-switching');
+                        });
+
+                        if (navigator.vibrate) navigator.vibrate(8);
+                    }, 280);
                 });
             });
 
