@@ -1409,7 +1409,7 @@
 
         /* ===== SCHIMBARE CULOARE PE TAB ===== */
 
-        /* Gri din logo-ul flēr (culoarea "flēr") */
+        /* bar-mode = gri (Bar&Brew activ) */
         :root.bar-mode {
             --gold: #8A8A8A;
             --brand-brown: #2C2C2C;
@@ -1439,6 +1439,23 @@
         /* Bordurile și elementele statice */
         * {
             transition-property: color, background-color, border-color, box-shadow;
+        }
+
+
+        /* Tab Food activ = mereu gri */
+        .tab-btn[data-tab="food"].active {
+            background: #7A7A7A !important;
+            border-color: #7A7A7A !important;
+            color: #fff !important;
+            box-shadow: 0 4px 18px rgba(120,120,120,0.3) !important;
+        }
+
+        /* Tab Bar&Brew activ = mereu portocaliu */
+        .tab-btn[data-tab="drinks"].active {
+            background: #B35D2D !important;
+            border-color: #B35D2D !important;
+            color: #fff !important;
+            box-shadow: 0 4px 18px rgba(179,93,45,0.35) !important;
         }
 
     </style>
